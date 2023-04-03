@@ -1,0 +1,31 @@
+17					  #on top of file is placed pointer to start of program is tradition to save 
+30
+133
+120
+0
+0
+1
+0
+132
+8
+0 0
+PROG_POS 8
+8 ADD_A
+10 ADD_B
+ADD_OUT 8
+9 PROG_POS
+0 0
+VAL_NULL RUN
+0 0
+PROG_START PROG_POS	  #restart program
+10 MONITOR
+VAL_NULL OUTPUT2	  #nuluju nabeznou hranu
+5 OUTPUT1			  #nastavení
+VAL_ONE OUTPUT2		  #poslání
+VAL_NULL OUTPUT2	  #nuluju nabeznou hranu
+6 OUTPUT1			  #nastavení
+VAL_ONE OUTPUT2		  #poslání
+VAL_NULL OUTPUT2	  #nuluju nabeznou hranu
+7 OUTPUT1			  #nastavení
+VAL_ONE OUTPUT2		  #poslání
+8 PROG_POS
