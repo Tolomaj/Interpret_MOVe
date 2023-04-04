@@ -130,7 +130,9 @@
     <ClCompile Include="moveprocesor.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="code.base" />
     <None Include="code.code" />
+    <None Include="compi.py" />
     <None Include="compiler.py" />
   </ItemGroup>
   <ItemGroup>

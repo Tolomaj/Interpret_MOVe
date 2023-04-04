@@ -23,14 +23,33 @@ void clearC() {
 
 	string alo = progPos + " | " + run + " | " + monit;
 
-	cout << alo << endl;
+	cout << alo << "    ________________________________" << endl;
+	
+
+
 	for (size_t i = 0; i < alo.length(); i++) {
 		cout << "-";
 	}
-	cout << endl;
+	cout << "   |";
+	display.displayROW(0);
+	int lastPrintedRow = 0;
 
 	for (size_t i = 0; i < defProgramSector - START_ADRESS; i = i + 1) {
-		cout << "[" << (START_ADRESS + i) << "] : " << memoryBlock[START_ADRESS + i] << endl;
+		string str = "[" + to_string(START_ADRESS + i) + "] : " + to_string(memoryBlock[START_ADRESS + i]);
+
+		cout << str;
+		for (size_t c = str.length(); c < alo.length()+3; c++) {
+			cout << " ";
+		}
+
+
+		if (i < 8) {
+			cout << "|";
+			display.displayROW(i + 1);
+			lastPrintedRow = (i + 1);
+		} else {
+			cout << endl;
+		}
 	}
 
 	ifstream code(FILE_NAME);
@@ -42,25 +61,46 @@ void clearC() {
 	code.close();
 
 	for (size_t i = 0; i < progCLines - (defProgramSector - START_ADRESS); i = i + 2) {
-		cout << "[" << (defProgramSector + i) << " - "<<  (defProgramSector + i +1) << "] : ";
-		cout << memoryBlock[defProgramSector + i] << " >> " << memoryBlock[defProgramSector + i + 1];
+
+		string outlin = "[" + to_string(defProgramSector + i) + " - " + to_string(defProgramSector + i +1) + "] : " + to_string(memoryBlock[defProgramSector + i]) + " >> " + to_string(memoryBlock[defProgramSector + i + 1]);
 		if ((defProgramSector + i) == memoryBlock[PROG_POS] || (defProgramSector + i + 1) == memoryBlock[PROG_POS]) {
-			cout << "<---";
+			outlin = outlin + " <---";
 		}
-			
-		cout << endl;
+
+		if ((defProgramSector + i) == memoryBlock[PROG_POS]-1 || (defProgramSector + i + 1) == memoryBlock[PROG_POS]-1 && memoryBlock[RUN] == 0) {
+			outlin = outlin + " <STOP";
+		}
+
+		cout << outlin;
+		
+
+
+		if (i/2 + lastPrintedRow <= 8 && lastPrintedRow != 8) {
+			for (size_t c = outlin.length(); c < alo.length(); c++) {
+				cout << " ";
+			}
+
+			cout << "   |";
+			display.displayROW(i + lastPrintedRow);
+			lastPrintedRow = (i + lastPrintedRow);
+		}
+		else {
+			cout << endl;
+		}
+
+
+
+
 	}
 
-	for (size_t i = 0; i < alo.length(); i++) {
+	for (size_t i = 0; i < (alo.length() - 7)/2; i++) {
 		cout << "-";
 	}
-	cout << endl;
-
-	display.display();
-
-	for (size_t i = 0; i < alo.length(); i++) {
+	cout << "HYSTORY";
+	for (size_t i = 0; i < (alo.length() - 7) / 2; i++) {
 		cout << "-";
 	}
+
 	cout << endl;
 
 	

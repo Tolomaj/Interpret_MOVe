@@ -19,9 +19,10 @@ Display display;
 #define VAL_ONE     1 // 1
 #define VAL_TWO     2 // 2
 #define VAL_FOUR    3 // 4
-#define VAL_EIGHT   4 // 8
-#define VAL_SIXTEEN 5 // 16 
-#define VAL_NEG     6 //-1
+#define VAL_SIX     4 // 6
+#define VAL_EIGHT   5 // 8
+#define VAL_SIXTEEN 6 // 16 
+#define VAL_NEG     7 //-1
 
 // možná pro všechny operace mít stejné A a B a jen brát hodnoty
 
@@ -75,7 +76,7 @@ Display display;
 
 
 #define FILE_NAME "code.code"
-#define MEMORY_BLOCK_SIZE 300
+#define MEMORY_BLOCK_SIZE 500
 int memoryBlock[MEMORY_BLOCK_SIZE];
 
 #include "consoleG.h"
@@ -136,6 +137,7 @@ int main(int argc, char** argv) {
 	memoryBlock[VAL_ONE] = 1;
 	memoryBlock[VAL_TWO] = 2;
 	memoryBlock[VAL_FOUR] = 4;
+	memoryBlock[VAL_SIX] = 6;
 	memoryBlock[VAL_EIGHT] = 8;
 	memoryBlock[VAL_SIXTEEN] = 16;
 	memoryBlock[VAL_NEG] = -1;
@@ -172,7 +174,7 @@ int main(int argc, char** argv) {
 			updateC();
 			printC("[" + to_string(source) + "](" + to_string(memoryBlock[source]) + ") >> [" + to_string(dest) + "] : " + to_string(memoryBlock[MONITOR]));
 			//printf("[%d] >> [%d] : %d\n", source, dest, memoryBlock[MONITOR]);
-			Sleep(200);
+			Sleep(150);
 
 
 		} else {

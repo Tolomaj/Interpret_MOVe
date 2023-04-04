@@ -22,6 +22,8 @@
   <ItemGroup>
     <None Include="code.code" />
     <None Include="compiler.py" />
+    <None Include="compi.py" />
+    <None Include="code.base" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="consoleG.h">

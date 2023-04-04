@@ -1,0 +1,67 @@
+DATA:
+	A 10
+	B 80
+	C 30
+	DSPLY_RST 20
+	LINE_END 8
+	RETURN_CLR 0
+	X 0
+	Y 0
+CODE:
+	A ADD_A		# <-CODE this is abstract			
+	B ADD_B
+	ADD_OUT A
+
+
+	LINE_END EQ_B
+	PROG_POS RETURN_CLR  <-NEXT_LINE    # nastaví odkud se program volá
+	DISPLAY PROG_POS                    #skoèit na monitor
+
+	X ADD_A			 #pøièítá aby to byla diagonála
+	VAL_ONE ADD_B
+	ADD_OUT X
+	X Y
+
+	X EQ_A			
+	EQ_OUT MUL_A      #když je X == 8 zapíše se na MUL_OUT 2
+	VAL_TWO MUL_B
+
+	MUL_OUT ADD_A 
+	VAL_TWO ADD_B     #když je X == 8 na ADD_A se zapíše 4 jinak se zapíše 2
+	ADD_OUT ADD_A
+
+	ADD_A MONITOR         #zapíše se hodnota na monitor
+
+	PROG_POS ADD_B
+	ADD_OUT PROG_POS      #pokud je x 8 skoèí se o 4 pokud není skoèí se o 2
+	NEXT_LINE PROG_POS    #pokud se skoèí o 4 pøeskoèí se tento skok
+
+
+	VAL_NULL RUN        #pause 
+	
+	VAL_NULL OUTPUT2	  #nuluju nabeznou hranu
+	DSPLY_RST OUTPUT1			  #nastavení C na output 20 by mìla vynulovat display
+	VAL_ONE OUTPUT2		  #poslání
+
+	VAL_NULL X		//nulování pozice
+	X Y
+
+	CODE PROG_POS         #restart programu
+
+
+
+	
+	               
+	VAL_NULL OUTPUT2	  <-DISPLAY #nuluju nabeznou hranu
+	X OUTPUT1			  #nastavení
+	VAL_ONE OUTPUT2		  #poslání
+	VAL_NULL OUTPUT2	  #nuluju nabeznou hranu
+	Y OUTPUT1			  #nastavení
+	VAL_ONE OUTPUT2		  #poslání
+	VAL_NULL OUTPUT2	  #nuluju nabeznou hranu
+	C OUTPUT1			  #nastavení
+	VAL_ONE OUTPUT2		  #poslání
+
+	VAL_TWO ADD_A     #vezme ofset 1 instrukce tedy 2 provedení
+	RETURN_CLR ADD_B  #a seète s pozicí volání
+	ADD_OUT PROG_POS  #skoèí
