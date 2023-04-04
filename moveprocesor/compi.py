@@ -35,6 +35,8 @@ for line in rawlines:
             jmpList.append(jumpLabel[1]) # crete jump list
             i = i + 1
         nCompiled = nCompiled + line + '\n'
+
+print(jmpList)
 #check if jumps not same
 
 
@@ -81,18 +83,16 @@ for line in instructions:
 
 
 
-for i in range(len(NMS)):
+for i in range(len(NMS)):                # nahrazení OPERA4N9CH PAM2T9 jmena na adresy
     TmpText = replace(TmpText,NMS[i],str(ADR[i]))
 
-for i in range(len(variableList)):
+for i in range(len(variableList)):       #doplnìní adress promìných
     TmpText = replace(TmpText,variableList[i][0],str(variableList[i][1]))
 
-for i in range(len(jmpList)):
+for i in range(len(jmpList)):           #doplnìní adres jumpù
     TmpText = replace(TmpText,jmpList[i],str(START_ADDRESS+2+i))
    
 
-print(jmpList)
-print(TmpText)
 
 open(FILE_OUT, 'w').close() #vyprazdni tmp soubor
 output = open(FILE_OUT, "a")

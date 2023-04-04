@@ -8,6 +8,7 @@ DATA:
 	X 0
 	Y 0
 CODE:
+	# <-ukazovátko je jako promìná do které se dá ukládat stejnì jako do promìné. jen má destinaci
 	A ADD_A		# <-CODE this is abstract			
 	B ADD_B
 	ADD_OUT A

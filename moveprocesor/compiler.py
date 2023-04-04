@@ -1,6 +1,8 @@
 import os 
 import re
 
+#OUTDATED
+
 START_ADDRESS = 100
 MAX_LINES = 200
 ADD_PROGRAM_OFFSET = 1
