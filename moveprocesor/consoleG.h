@@ -64,11 +64,11 @@ void clearC() {
 
 		string outlin = "[" + to_string(defProgramSector + i) + " - " + to_string(defProgramSector + i +1) + "] : " + to_string(memoryBlock[defProgramSector + i]) + " >> " + to_string(memoryBlock[defProgramSector + i + 1]);
 		if ((defProgramSector + i) == memoryBlock[PROG_POS] || (defProgramSector + i + 1) == memoryBlock[PROG_POS]) {
-			outlin = outlin + " <---";
+			outlin = outlin + "\033[96m <---\033[0m";
 		}
 
 		if ((defProgramSector + i) == memoryBlock[PROG_POS]-1 || (defProgramSector + i + 1) == memoryBlock[PROG_POS]-1 && memoryBlock[RUN] == 0) {
-			outlin = outlin + " <STOP";
+			outlin = outlin + "\033[93m  <STOP\033[0m";
 		}
 
 		cout << outlin;

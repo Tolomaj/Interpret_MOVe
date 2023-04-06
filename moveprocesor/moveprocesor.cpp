@@ -24,6 +24,7 @@ Display display;
 #define VAL_SIXTEEN 6 // 16 
 #define VAL_NEG     7 //-1
 
+#define MAX_MEM     9
 // možná pro všechny operace mít stejné A a B a jen brát hodnoty
 
 #define ADD_A   10
@@ -68,6 +69,13 @@ Display display;
 #define MONITOR 48
 #define EXIT    49 // debug if 1 restart program
 #define RUN     50
+
+#define PROG_NEXT       51  //adressa další instrukce
+#define PROG_NEXT_TWO   52	//adresa další další instrukce
+#define PROG_NEXT_THREE 53  //...
+#define PROG_NEXT_FOUR  54  //...
+
+
 
 
 #define START_ADRESS 100
@@ -142,6 +150,8 @@ int main(int argc, char** argv) {
 	memoryBlock[VAL_SIXTEEN] = 16;
 	memoryBlock[VAL_NEG] = -1;
 
+	memoryBlock[MAX_MEM] = MEMORY_BLOCK_SIZE;
+
 
 	loadProgram();
 
@@ -158,9 +168,18 @@ int main(int argc, char** argv) {
 
 			int progPos = memoryBlock[PROG_POS];
 
+			memoryBlock[PROG_POS] = memoryBlock[PROG_POS] + 2;
+			memoryBlock[PROG_NEXT] = memoryBlock[PROG_POS] + 2;
+			memoryBlock[PROG_NEXT_TWO] = memoryBlock[PROG_POS] + 4;
+			memoryBlock[PROG_NEXT_THREE] = memoryBlock[PROG_POS] + 6;
+			memoryBlock[PROG_NEXT_FOUR] = memoryBlock[PROG_POS] + 8;
+
 			int source = memoryBlock[progPos];
 			int dest = memoryBlock[progPos + 1];
-			memoryBlock[PROG_POS] = memoryBlock[PROG_POS] + 2;
+
+
+
+
 
 			if (memoryBlock[PROG_POS] > MEMORY_BLOCK_SIZE){
 				printf("WRITE FAULT!");
@@ -169,6 +188,13 @@ int main(int argc, char** argv) {
 			}
 
 			memoryBlock[dest] = memoryBlock[source];
+
+			if (dest == PROG_POS && memoryBlock[source] == progPos) { // když se zapisuje do progpos stejná hodnota jako je právě hodí err
+				printC("\033[93m PROG_POS IM CICLING : stoping program (dbg feature) \033[0m");
+				memoryBlock[RUN] = 0;
+			}
+
+			
 
 			countRutine();
 			updateC();
@@ -188,7 +214,7 @@ int main(int argc, char** argv) {
 			countRutine();
 			clearC();
 			//printf("[%d] >> [%d] : %d\n", source, dest, memoryBlock[MONITOR]);
-			printC("[" + to_string(source) + "] >> [" + to_string(dest) + "] : " + to_string(memoryBlock[MONITOR]));
+			printC("\033[1;31m [" + to_string(source) + "] >> [" + to_string(dest) + "] : " + to_string(memoryBlock[MONITOR])+"\033[0m");
 
 		}
 		display.simpleExternalDisplay(memoryBlock[OUTPUT1], memoryBlock[OUTPUT2]);

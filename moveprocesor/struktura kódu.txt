@@ -1,0 +1,34 @@
+|[PROGRAM_COUNTER]
+|[PROGRAM_LENNGHT]
+|
+|[PROGRAM_JUMP_ADRESSES]
+|		  ...
+|[PROGRAM_JUMP_ADRESSES]
+|
+|[PROGRAM_VARIABLES]
+|		...
+|[PROGRAM_VARIABLES]
+|
+|[PROGRAM_INSTRUCTIONS]
+|	    ...
+|[PROGRAM_INSTRUCTIONS]
+|
+|
+|
+|
+|
+|
+|
+|
+|
+|
+|
+|
+|
+|
+|
+|
+|
+|	  A
+|	  |
+|[PUSH_LIST]

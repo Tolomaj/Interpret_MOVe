@@ -21,7 +21,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="code.code" />
-    <None Include="compiler.py" />
     <None Include="compi.py" />
     <None Include="code.base" />
   </ItemGroup>
@@ -34,6 +33,7 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <Text Include="code.txt" />
+    <Text Include="struktura kódu.txt" />
+    <Text Include="k přidělání.txt" />
   </ItemGroup>
 </Project>
