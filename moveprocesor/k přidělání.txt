@@ -1,3 +1,22 @@
+Pøíkazy:
+
+	run -> run simulation
+	stop -> stop simulation
+	key -> attach keyboard to procesor
+	
+	hvar -> highlite variables
+	hvare -> highlite variable sector end
+	hjmp -> highlight lines vith jumps
+	hall -> highlight all things in code
+	clsr -> resfrsh comand promt (UI)
+
+	step -> do 1 instruction (ticks to 1 clock cycle)
+	clock xx -> set haw many tick is needet to one instruction
+	peek xx -> show content of register
+	mv xxx xxx -> move reg source to reg dest
+
+
+
 
 
 Instrukèní registry k pøidìlání:

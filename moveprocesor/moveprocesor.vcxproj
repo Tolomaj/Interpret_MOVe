@@ -133,11 +133,15 @@
     <None Include="code.base" />
     <None Include="code.code" />
     <None Include="compi.py" />
+    <None Include="READ.ME" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="consoleDisplay.h" />
     <ClInclude Include="consoleG.h" />
+    <ClInclude Include="consoleLovMonit.h" />
     <ClInclude Include="Display.h" />
+    <ClInclude Include="procesor.h" />
+    <ClInclude Include="txtDisplay.h" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="k přidělání.txt" />

@@ -1,13 +1,14 @@
 import os
 import re
+import sys
 
 START_ADDRESS = 100
 MEMORY_SIZE = 500
 FILE_OUT = "code.code"
 FILE_IN = "code.base"
 
-NMS = ["CODE"         ,"PROG_POS"    ,"VAL_NULL","VAL_ONE","VAL_TWO","VAL_FOUR","VAL_SIX","VAL_EIGHT","VAL_SIXTEEN","VAL_NEG","MEM_END","ADD_A","ADD_B","ADD_OUT","SUB_A","SUB_B","SUB_OUT","MUL_A","MUL_B","MUL_OUT","DIV_A","DIV_B","DIV_OUT","REM_A","REM_B","REM_OUT","EQ_A","EQ_B","EQ_OUT","SHIFT_L_A","SHIFT_L_OUT","SHIFT_R_A","SHIFT_R_OUT","OUTPUT1","OUTPUT2","OUTPUT3","INPUT1","INPUT2","INPUT3","MONITOR","EXIT","RUN","PROG_NEXT","PROG_NEXT_TWO","PROG_NEXT_THREE","PROG_NEXT_FOUR"]
-ADR = [START_ADDRESS+1,START_ADDRESS ,0         ,1        ,2        ,3         ,4          ,5          ,6            ,7      ,9        ,10     ,11     ,12       ,13     ,14     ,15       ,16     ,17     ,18       ,19     ,20     ,21       ,22     ,23     ,24       ,25    ,26    ,27      ,28         ,29           ,30         ,31           ,42       ,43       ,44       ,45      ,56      ,47      ,48       ,49    ,50   ,51         ,52             ,53               ,54              ]
+NMS = ["CODE"         ,"PROG_POS"    ,"VAL_NULL","VAL_ONE","VAL_TWO","VAL_FOUR","VAL_SIX","VAL_EIGHT","VAL_SIXTEEN","VAL_NEG","MEM_END","ADD_A","ADD_B","ADD_OUT","SUB_A","SUB_B","SUB_OUT","MUL_A","MUL_B","MUL_OUT","DIV_A","DIV_B","DIV_OUT","REM_A","REM_B","REM_OUT","EQ_A","EQ_B","EQ_OUT","SHIFT_L_A","SHIFT_L_OUT","SHIFT_R_A","SHIFT_R_OUT","OR_A","OR_B","OR_OUT","AND_A","AND_B","AND_OUT","NEG_A","NEG_OUT","OUTPUT1","OUTPUT2","OUTPUT3","INPUT1","INPUT2","INPUT3","MONITOR","INTERUPT_JMP","PRE_INT_ADRESS","PROG_NEXT","PROG_NEXT_TWO","PROG_NEXT_THREE","PROG_NEXT_FOUR","SWITCH_A", "SWITCH_B", "SWITCH_S", "SWITCH_OUT","RAND","INTERUPT_MODE"]
+ADR = [START_ADDRESS+1,START_ADDRESS ,0         ,1        ,2        ,3         ,4          ,5          ,6            ,7      ,9        ,10     ,11     ,12       ,13     ,14     ,15       ,16     ,17     ,18       ,19     ,20     ,21       ,22     ,23     ,24       ,25    ,26    ,27      ,28         ,29           ,30         ,31           ,32    ,34    ,35      ,36     ,37     ,38       ,39     ,40       ,42       ,43       ,44       ,45      ,46      ,47      ,48       ,49            ,50              ,51         ,52             ,53               ,54              ,55        ,56         ,57         ,58           ,59    ,60             ]
 
 def replace(arr, old_val, new_val):
     for i in range(len(arr)):
@@ -20,8 +21,11 @@ def programEND():
     if ERROR_COUNT != 0 :
         open(FILE_OUT, 'w').close() #vyprazdni tmp soubor
         print("\033[93m" + "Compilation cant be done!" + "\033[0m")
+        sys.exit(1)
     else:
         print("\033[94m" + "Compilation DONE" + "\033[0m")
+        sys.exit(0)
+    
 
 variableList = []
 jmpList = []
@@ -55,6 +59,12 @@ if instructions[0] == '':
 
 file.close();
 
+
+if (len(variables) % 2) != 0:
+    print("\033[91m" + "ERROR[0]: Some variable dont have value" + "\033[0m")
+    ERROR_TYPE = 2
+    programEND()
+
 for i in range(0,len(variables),2):
     variableList.append([variables[i],variables[i+1]]); # crete variable list
 #check if not same variable names
@@ -83,6 +93,20 @@ for line in instructions:
     if len(jumpLabel) >= 2: #line has jump identificator
         adr = 2 + jmpList.index(jumpLabel[1])
         TmpText[adr] = str(doneLineAdress+1); #write jump adress
+
+
+    jumpLabel = line.split("{-")
+    onlyInst = line.split("{-")[0]
+    if len(jumpLabel) >= 2: #line has jump identificator
+        variableList.append([jumpLabel[1],doneLineAdress+1]);
+        #print(variableList);
+
+    jumpLabel = line.split("}-")
+    onlyInst = line.split("}-")[0]
+    if len(jumpLabel) >= 2: #line has jump identificator
+        variableList.append([jumpLabel[1],doneLineAdress+2]);
+        #print(variableList);
+
     onlyInst = onlyInst.split();
     TmpText.append(onlyInst[0])
     TmpText.append(onlyInst[1])

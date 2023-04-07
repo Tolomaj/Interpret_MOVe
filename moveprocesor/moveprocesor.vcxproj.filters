@@ -23,12 +23,25 @@
     <None Include="code.code" />
     <None Include="compi.py" />
     <None Include="code.base" />
+    <None Include="READ.ME" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="consoleG.h">
       <Filter>Hlavičkové soubory</Filter>
     </ClInclude>
     <ClInclude Include="Display.h">
+      <Filter>Hlavičkové soubory</Filter>
+    </ClInclude>
+    <ClInclude Include="consoleDisplay.h">
+      <Filter>Hlavičkové soubory</Filter>
+    </ClInclude>
+    <ClInclude Include="consoleLovMonit.h">
+      <Filter>Hlavičkové soubory</Filter>
+    </ClInclude>
+    <ClInclude Include="procesor.h">
+      <Filter>Hlavičkové soubory</Filter>
+    </ClInclude>
+    <ClInclude Include="txtDisplay.h">
       <Filter>Hlavičkové soubory</Filter>
     </ClInclude>
   </ItemGroup>

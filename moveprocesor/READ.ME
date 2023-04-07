@@ -1,0 +1,42 @@
+Toto je interpret a debugovací program pro MOVe
+
+Co interpret umožòuje?
+	Umožòuje náhled na která instrukce se v kódu provádí.
+
+	Má pøíkazi na debug:
+		run -> spustí simulaci
+		stop -> zastaví simulaci
+		key -> pøipojí klávesnici na vstup
+	
+		hvar -> zvírazní co adresi promìných
+		hvare -> zvírazní konec promìnného prostoru 
+		hjmp -> zvýrazní zápis do pozicového registru
+		hall -> zapne všechno zvýraznování
+		clsr -> pøekreslí UI konzole.                   // obèas pøi zvìtšování dìlá konzole zmatky
+
+		step     -> provede jednu instrukci
+		clock xx -> nastaví rychlost hodin použitých pokud program bìží
+		peek xx  -> zobrazí co register obsahuje
+		mv AAA BBB -> pøesune obsah z registru AAA do registru BBB // v debug verzi je tøeba zadávat jako mv001025 // 1 >> 25
+
+Co je MOVe?
+	MOVe je programovací jazyk obsahující jen jedinou instrukci a to pøesuò z adresy na adresu.
+
+Jak se v MOVe napøíklad sèítá když umí jen pøesouvat registry?
+	Procesor má mnoho registrù které zvládají jednoduché operace.
+	
+	Napøíklad:
+
+	  MOJE_CISLO ADD_A
+	  TVOJE_CISLO ADD_B
+	  ADD_OUT MONITOR
+
+	Tento kus kódu provede seètení èísla v registru MOJE_CISLO a èísla TVOJE_CISLO,
+	které zapíše na register MONITOR (viditelný v debugeru).
+
+
+
+
+
+
+Jazyk MOVE

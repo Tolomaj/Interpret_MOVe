@@ -31,7 +31,7 @@ void clearC() {
 		cout << "-";
 	}
 	cout << "   |";
-	display.displayROW(0);
+	//display.displayROW(0);
 	int lastPrintedRow = 0;
 
 	for (size_t i = 0; i < defProgramSector - START_ADRESS; i = i + 1) {
@@ -45,7 +45,7 @@ void clearC() {
 
 		if (i < 8) {
 			cout << "|";
-			display.displayROW(i + 1);
+			//display.displayROW(i + 1);
 			lastPrintedRow = (i + 1);
 		} else {
 			cout << endl;
@@ -81,7 +81,7 @@ void clearC() {
 			}
 
 			cout << "   |";
-			display.displayROW(i + lastPrintedRow);
+			//display.displayROW(i + lastPrintedRow);
 			lastPrintedRow = (i + lastPrintedRow);
 		}
 		else {
