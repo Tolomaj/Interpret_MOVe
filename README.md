@@ -1,5 +1,5 @@
 # Toto je interpret a debugovací program pro MOVe
-
+![Snímek obrazovky 2023-04-08 142912](https://user-images.githubusercontent.com/59420562/230721129-a7f1dd1f-1905-463d-9922-a4c3632c4acd.png)
 # Co interpret umožňuje?
 	Umožňuje náhled na která instrukce se v kódu provádí.
 
@@ -50,6 +50,7 @@
 		[VAL_NEG]     obsahuje -1
 
 		[RAND]        obsahuje náhodné číslo
+
 
         Speciální Registry: 
 		[PROG_START]
