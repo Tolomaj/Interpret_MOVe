@@ -18,6 +18,7 @@ using namespace std;
 #define VAL_SIXTEEN 6 // 16 
 #define VAL_NEG     7 //-1
 
+#define G_POINTER   8
 #define MAX_MEM     9
 // možná pro všechny operace mít stejné A a B a jen brát hodnoty
 
@@ -200,6 +201,7 @@ void Procesor::countRutine() {
 	memoryBlock[VAL_SIXTEEN] = 16;
 	memoryBlock[VAL_NEG] = -1;
 	memoryBlock[MAX_MEM] = MEMORY_BLOCK_SIZE;
+	memoryBlock[RAND] = (CELL_TYPE)rand();
 
 	//do math
 	memoryBlock[ADD_OUT]     = memoryBlock[ADD_A]     +     memoryBlock[ADD_B];

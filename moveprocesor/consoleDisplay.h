@@ -4,7 +4,6 @@
 #include "consoleLovMonit.h"
 #include <vector>
 #include "Display.h"
-#pragma comment(lib,"graphics.lib")
 
 using namespace std;
 

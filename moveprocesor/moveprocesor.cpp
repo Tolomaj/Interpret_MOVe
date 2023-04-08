@@ -245,7 +245,7 @@ main:
 		}
 
 		
-		Sleep(0.000001);
+		Sleep(0.001);
 	}
 
 	return 0;

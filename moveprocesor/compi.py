@@ -1,3 +1,5 @@
+#Compi 1.002
+
 import os
 import re
 import sys

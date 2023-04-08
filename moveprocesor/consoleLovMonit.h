@@ -2,7 +2,6 @@
 #include <string>
 #include <iostream>
 #include <windows.h>
-#pragma comment(lib,"graphics.lib")
 
 using namespace std;
 
