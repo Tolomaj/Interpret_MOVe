@@ -15,7 +15,7 @@ CODE:
 	TIM MONITOR
 	LOOP PROG_POS #konec loopu
 
-
+	VAL_NULL VAL_NULL
 	  TIM ADD_B    <-FUNKCE # Ukazovátko vytvoří proměnou obsahující adresu na instrukci na stejném řádku 
 	  VAL_ONE ADD_A
 	  ADD_OUT TIM

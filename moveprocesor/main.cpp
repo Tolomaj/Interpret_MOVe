@@ -90,6 +90,11 @@ void executeComand(string comandBuffer) {
 			cDis.print("Program not valid!", CLR_RED);
 		}
 	}
+	else if (comandBuffer == "open") {
+		// system("notepad code.base");
+		ShellExecute(NULL, L"open", L"code.base", NULL, NULL, SW_SHOWNORMAL); // open file in Windows default text editor
+
+	}
 	else if (comandBuffer == "stop") {
 		simRules.run = false;
 		cDis.print("Program stoped.", CLR_YELOW);
@@ -120,28 +125,108 @@ void executeComand(string comandBuffer) {
 		txtDisplayPer.rstBuff();
 	}
 	else if (comandBuffer.substr(0, 5) == "clock" && comandBuffer.length() > 5) {
-		simRules.tickDuration = stoi(comandBuffer.substr(5, comandBuffer.length()));
+		int clk;
+		try {
+			clk = stoi(comandBuffer.substr(5, comandBuffer.length()));
+		} catch (exception& err) {
+			cDis.print("Invalid parameters", CLR_RED);
+			return;
+		}
+
+		simRules.tickDuration = clk;
 		cDis.print("Tick pen instruct: " + to_string(simRules.tickDuration), CLR_YELOW);
+
 	}
 	else if (comandBuffer.substr(0, 4) == "peek") {
-		int id = stoi(comandBuffer.substr(4, comandBuffer.length()));
-
+		int id;
+		try {
+			id = stoi(comandBuffer.substr(4, comandBuffer.length()));
+		} catch (exception& err) {
+			cDis.print("Invalid parameters", CLR_RED);
+			return;
+		}
+		
 		cDis.print("constent of [" + to_string(id) + "] is " + to_string(procesor.DBG_getMemoryBlock()[id]), CLR_YELOW);
 	}
-	else if (comandBuffer.substr(0, 2) == "mv" && comandBuffer.length() == 8) {
-		int a = stoi(comandBuffer.substr(2, 3)); // do vith space mv xxx xxx
-		int b = stoi(comandBuffer.substr(5, 3));
+	else if (comandBuffer.substr(0, 3) == "mv ") {
+		int a;
+		int b;
+
+		try {
+			string nums = comandBuffer.substr(3, comandBuffer.length());
+			int finds = nums.find(' ');
+			a = stoi(nums.substr(0, finds)); // do vith space mv xxx xxx
+			b = stoi(nums.substr(finds, nums.length()));
+		} catch (exception& err) {
+			cDis.print("Invalid parameters",CLR_RED);
+			return;
+		}
 		procesor.DBG_manulaMove(a, b);
+		cDis.print("Move [" + to_string(a) + "](" + to_string(procesor.DBG_getMemoryBlock()[a]) + ") >> [" + to_string(b) + "].", CLR_YELOW);
 
 		procesor.countRutine();
-
-		cDis.print("Move [" + to_string(a) + "](" + to_string(procesor.DBG_getMemoryBlock()[a]) + ") >> [" + to_string(b) + "].", CLR_YELOW);
 	}
 	else if (comandBuffer.substr(0, 5) == "clsr") {
 		system("cls");
 	}
 }
 
+
+void checkConsole(string * comandBuffer) {
+	char a = (char)_getch();
+	if (a != 0) {
+		if (!simRules.conectKeyboardToOutput) { //keayboard conected to console
+			if (a > 0 && a <= 255) { // check if is valid character for other functions
+				if (isalpha(a) || isdigit(a) || a == ' ') {	//printable
+					*comandBuffer = *comandBuffer + a;
+				}
+				else if (a == 8) { //back slash removes last char
+					if (comandBuffer->size() > 0) {
+						*comandBuffer = comandBuffer->substr(0, comandBuffer->size() - 1);
+					}
+
+				}
+				else if (a == 13) { //entr key
+					for (auto& c : *comandBuffer) { c = tolower(c); } // to lower
+					executeComand(*comandBuffer); //run comand
+					*comandBuffer = "";
+				}
+				else if (a == 59) { //entr key
+					simulateProcesorTick();
+				}
+				else {
+					cDis.print("nonrecognizedChar" + to_string((int)a), CLR_RED);
+				}
+			}
+			else {
+
+				cDis.print("pressed invalid key!", CLR_RED);
+
+			}
+		}
+		else {
+			if (a == 9) { //on tab
+				simRules.conectKeyboardToOutput = false;
+				cDis.print("KeyboardDisconected.");
+			}
+			else {
+
+				bool value = (*procesor.INPUT_1 && 1);
+
+				*procesor.INPUT_1 = *procesor.INPUT_1 | 1; // turn up last bit
+
+				*procesor.INPUT_2 = a;	//set char
+
+				keyboardSbitTimer = simRules.upSignalDuration * simRules.tickDuration;
+
+
+				procesor.countRutine();
+				procesor.interuptRutine();
+			}
+		}
+	}
+
+}
 
 
 int main(int argc, char** argv) {
@@ -164,61 +249,10 @@ main:
 	while (1) {
 
 		if (_kbhit()) { // console handle
-			char a = (char)_getch();
-			if (a != 0) {
-				if (!simRules.conectKeyboardToOutput) { //keayboard conected to console
-					if (a > 0 && a <= 255) { // check if is valid character for other functions
-						if (isalpha(a) || isdigit(a) || a == ' ') {	//printable
-							comandBuffer = comandBuffer + a;
-						}
-						else if (a == 8 ) { //back slash removes last char
-							if (comandBuffer.size() > 0) {
-								comandBuffer = comandBuffer.substr(0, comandBuffer.size() - 1);
-							}
-							
-						}
-						else if (a == 13) { //entr key
-							for (auto& c : comandBuffer){ c = tolower(c); } // to lower
-							executeComand(comandBuffer); //run comand
-							if (totalRST) {
-								goto main;
-							}
-							comandBuffer = "";
-						}
-						else if (a == 59) { //entr key
-							simulateProcesorTick();
-						}
-						else {
-							cDis.print("nonrecognizedChar" + to_string((int)a), CLR_RED);
-						}
-					}
-					else {
-					
-							cDis.print("pressed invalid key!", CLR_RED);
-
-					}
-				} else {
-					if (a == 9) { //on tab
-						simRules.conectKeyboardToOutput = false;
-						cDis.print("KeyboardDisconected.");
-					}
-					else {
-
-						bool value = (*procesor.INPUT_1 && 1);
-
-						*procesor.INPUT_1 = *procesor.INPUT_1 | 1; // turn up last bit
-
-						*procesor.INPUT_2 = a;	//set char
-
-						keyboardSbitTimer = simRules.upSignalDuration*simRules.tickDuration;
-
-
-						procesor.countRutine();
-						procesor.interuptRutine();
-					}
-				}
+			checkConsole(&comandBuffer);
+			if (totalRST) {
+				goto main;
 			}
-			
 		}
 		if (keyboardSbitTimer == 1) {
 			*procesor.INPUT_1 = *procesor.INPUT_1 & ~1; // turn down last bit
@@ -226,8 +260,6 @@ main:
 		if (keyboardSbitTimer > 0) {
 			keyboardSbitTimer--;
 		}
-
-		
 
 		if (simRules.run && clockDivider > simRules.tickDuration) {
 			clockDivider = 0;

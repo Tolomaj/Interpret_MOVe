@@ -11,10 +11,10 @@ using namespace std;
 #define PROG_ROW_LEN 20
 
 struct displaySettings {
-	bool colorJumps = false;
-	bool colorVariables = false;
+	bool colorJumps = true;
+	bool colorVariables = true;
 	bool showVarEnd = false;
-	bool invalidLines = false;
+	bool invalidLines = true;
 };
 
 class consDisplay {       // The class

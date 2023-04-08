@@ -1,3 +1,5 @@
+
+
 Pøidání:
 	DBGINFO: ??
 		pøekladaè do souboru napíš dodateèné informace pro debug a simulator ho vezme do uvahu
@@ -5,3 +7,10 @@ Pøidání:
 
 		50 m[AHOJ]s[200]  // na lince 50 se zmení rychlost na 200 a vypíše se AHOJ
 		60 m[text]v[20]    //na lince 60 se vypíše text a obsah registru 20
+
+??možná :
+	pøedìlat!!
+	kód bude na zaèátku první instrukce bude na 100
+	a promìné bude až potom
+
+	važ víhody/nevíhody

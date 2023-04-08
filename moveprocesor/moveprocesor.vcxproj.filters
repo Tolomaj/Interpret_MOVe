@@ -15,7 +15,7 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="moveprocesor.cpp">
+    <ClCompile Include="main.cpp">
       <Filter>Zdrojové soubory</Filter>
     </ClCompile>
   </ItemGroup>
@@ -23,7 +23,6 @@
     <None Include="code.code" />
     <None Include="compi.py" />
     <None Include="code.base" />
-    <None Include="README" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="consoleG.h">
@@ -46,7 +45,6 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <Text Include="struktura kódu.txt" />
     <Text Include="k přidělání.txt" />
   </ItemGroup>
 </Project>

@@ -127,13 +127,12 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="moveprocesor.cpp" />
+    <ClCompile Include="main.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="code.base" />
     <None Include="code.code" />
     <None Include="compi.py" />
-    <None Include="README" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="consoleDisplay.h" />
@@ -145,7 +144,6 @@
   </ItemGroup>
   <ItemGroup>
     <Text Include="k přidělání.txt" />
-    <Text Include="struktura kódu.txt" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
