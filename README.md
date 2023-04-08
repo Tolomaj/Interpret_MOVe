@@ -26,16 +26,16 @@
 	MOVe je programovací jazyk obsahující jen jedinou instrukci a to přesuň z adresy na adresu.
 
 # Jak se v MOVe například sčítá když umí jen přesouvat registry?
-	Procesor má mnoho registrů které zvládají jednoduché operace.
+Procesor má mnoho registrů které zvládají jednoduché operace.
 	
-	Například:
+Například:
 
 	  MOJE_CISLO ADD_A
 	  TVOJE_CISLO ADD_B
 	  ADD_OUT MONITOR
 
-	Tento kus kódu provede sečtení čísla v registru MOJE_CISLO a čísla TVOJE_CISLO,
-	které zapíše na register MONITOR (viditelný v debugeru).
+Tento kus kódu provede sečtení čísla v registru MOJE_CISLO a čísla TVOJE_CISLO,
+které zapíše na register MONITOR (viditelný v debugeru).
 
 # Registry jazyka MOVe:
 
