@@ -4,23 +4,23 @@
 Umožňuje náhled na která instrukce se v kódu provádí.
 Má příkazi na debug:
 ```python
-	run 		#spustí simulaci
-	stop 		#zastaví simulaci
-	key 		#připojí klávesnici na vstup
+run 		#spustí simulaci
+stop 		#zastaví simulaci
+key 		#připojí klávesnici na vstup
 	
-	hvar 		#zvírazní co adresi proměných
-	hvare 		#zvírazní konec proměnného prostoru 
-	hjmp 		#zvýrazní zápis do pozicového registru
-	hall 		#zapne všechno zvýraznování
-	clsr 		#překreslí UI konzole.                   // občas při zvětšování dělá konzole zmatky
+hvar 		#zvírazní co adresi proměných
+hvare 		#zvírazní konec proměnného prostoru 
+hjmp 		#zvýrazní zápis do pozicového registru
+hall 		#zapne všechno zvýraznování
+clsr 		#překreslí UI konzole.                   // občas při zvětšování dělá konzole zmatky
 
-	step      	#provede jednu instrukci
-	clock XXX 	#nastaví rychlost hodin použitých pokud program běží
-	peek XXX  	#zobrazí co register obsahuje
-	mv AAA BBB 	#přesune obsah z registru AAA do registru BBB // v debug verzi je třeba zadávat jako mv001025 // 1 >> 25
-	
-	load     	#compile and load program
-	open     	#open program file
+step      	#provede jednu instrukci
+clock XXX 	#nastaví rychlost hodin použitých pokud program běží
+peek XXX  	#zobrazí co register obsahuje
+mv AAA BBB 	#přesune obsah z registru AAA do registru BBB // v debug verzi je třeba zadávat jako mv001025 // 1 >> 25
+
+load     	#compile and load program
+open     	#open program file (in separate window probably notepad)
 ```
 
 
@@ -181,24 +181,28 @@ Paměťový prostor vypisujeme od 100 protože před stovkou jsou sčítací reg
 
 
 
+
+
+
 # Struktura Jazyka MOVe(Compi 1.02):
+```python
+[FUNKČNÍ REGISTRY] #tady se nachází registry jako ADD_A,ADD_B a další 
+	...
+	...
+[FUNKČNÍ REGISTRY]
 
-	[FUNKČNÍ REGISTRY] #tady se nachází registry jako ADD_A,ADD_B a další 
-		...
-		...
-	[FUNKČNÍ REGISTRY]
-
-	[PROGRAM_COUNTER] #na první programové adrese je vždy registr další instrukce k proedení
-	[PROGRAM_LENNGHT] #na druhé programové adrese konec prostoru proměných a tudíž začátek kódu. tento register se jmenuje CODE protože v něm je uložená adresa první pozice
+[PROGRAM_COUNTER] #na první programové adrese je vždy registr další instrukce k proedení
+[PROGRAM_LENNGHT] #na druhé programové adrese konec prostoru proměných a tudíž začátek kódu. tento register se jmenuje CODE protože v něm je uložená adresa první pozice 
 	
-	[PROGRAM_JUMP_ADRESSES] # zde se nachází adresy na návěští které v programu použijeme
-			  ...
-	[PROGRAM_JUMP_ADRESSES]
+[PROGRAM_JUMP_ADRESSES] # zde se nachází adresy na návěští které v programu použijeme
+	...
+[PROGRAM_JUMP_ADRESSES]
 	
-	[PROGRAM_VARIABLES]		# zde se anchází proměné
-			...
-	[PROGRAM_VARIABLES]
+[PROGRAM_VARIABLES]		# zde se anchází proměné
+	...
+[PROGRAM_VARIABLES]
 	
-	[PROGRAM_INSTRUCTIONS]	# zde se nachází instrukce, vždy po dvojicích
-		    ...
-	[PROGRAM_INSTRUCTIONS]
+[PROGRAM_INSTRUCTIONS]	# zde se nachází instrukce, vždy po dvojicích
+	...
+[PROGRAM_INSTRUCTIONS]
+```
