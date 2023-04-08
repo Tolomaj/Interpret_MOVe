@@ -18,6 +18,9 @@
 		clock xx -> nastaví rychlost hodin použitých pokud program běží
 		peek xx  -> zobrazí co register obsahuje
 		mv AAA BBB -> přesune obsah z registru AAA do registru BBB // v debug verzi je třeba zadávat jako mv001025 // 1 >> 25
+		
+		load     -> compile and load program
+		open     -> open program file
 
 # Co je MOVe?
 	MOVe je programovací jazyk obsahující jen jedinou instrukci a to přesuň z adresy na adresu.
@@ -46,24 +49,24 @@
 		[VAL_SIXTEEN] obsahuje 16 
 		[VAL_NEG]     obsahuje -1
 
-		[RAND] obsahuje náhodné číslo
+		[RAND]        obsahuje náhodné číslo
 
         Speciální Registry: 
 		[PROG_START]
-		[PROG_POS]
+		[PROG_POS]        obsahuje adresu dalšího příkazu
+		[PROG_NEXT]	  obsahuje adresu příkazu po 2 provedení
+		[PROG_NEXT_TWO]   obsahuje adresu příkazu po 3 provedení
+		[PROG_NEXT_THREE] obsahuje adresu příkazu po 4 provedení
+		[PROG_NEXT_FOUR]  obsahuje adresu příkazu po 5 provedení
 
 		[G_POINTER]       register určený pro ukládání ukazování do paměi // !nedodělané
 		[MAX_MEM]         obsahuje velikost maximální paměti
 		[INTERUPT_JMP]    obsahuje adresu skoku při interuptu
 		[INTERUPT_MODE]   obsahuje zapnutí interuptu. Reaguje na [DISPLAY1], 0 = vyplé, 1 = při změně na HIGH, 2 = při změně na LOW, 3 = při HIGH i LOW. 
-		[PRE_INT_ADRESS]
+		[PRE_INT_ADRESS]  obsahuje adresu ze kterého se do přerušení skočilo
 
-		[PROG_NEXT]
-		[PROG_NEXT_TWO]
-		[PROG_NEXT_THREE]
-		[PROG_NEXT_FOUR]
-
-		[MONITOR]
+		[MONITOR]	  register napojený na monitor v simulátoru
+		
 		[OUTPUT1]
 		[OUTPUT2]
 		[OUTPUT3]
@@ -88,15 +91,6 @@
 		[SWITCH_OUT] = [SWITCH_S] ? [SWITCH_A] : [SWITCH_B]
 		
 		[NEG_OUT] = ~[NEG_A] 
-
-		
-
-
-
-
-
-
-
 
 
 # Struktura Jazyka MOVe(Compi 1.02):
