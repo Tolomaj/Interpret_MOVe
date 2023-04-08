@@ -113,7 +113,7 @@ Pouužité třeba pro načítání stringu z paměti. Přičítáním do [NAME] 
 Toto vytvoří vyrtuální proměnou [NAME] která všude v kódu je nahrazena adresou instrukce "dest".
 Pouužité třeba pro ukládání stringu do paměti. Přičítáním do [NAME] budeme totiž psát do registru dál
 
-	}-NAME
+	[source][dest] }-NAME
 
 # Struktura Jazyka MOVe(Compi 1.02):
 
