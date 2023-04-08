@@ -133,7 +133,7 @@
     <None Include="code.base" />
     <None Include="code.code" />
     <None Include="compi.py" />
-    <None Include="READ.ME" />
+    <None Include="README" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="consoleDisplay.h" />
