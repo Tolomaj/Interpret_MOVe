@@ -3,24 +3,26 @@
 # Co interpret umožňuje?
 Umožňuje náhled na která instrukce se v kódu provádí.
 Má příkazi na debug:
-
-		run -> spustí simulaci
-		stop -> zastaví simulaci
-		key -> připojí klávesnici na vstup
+```python
+	run 		#spustí simulaci
+	stop 		#zastaví simulaci
+	key 		#připojí klávesnici na vstup
 	
-		hvar -> zvírazní co adresi proměných
-		hvare -> zvírazní konec proměnného prostoru 
-		hjmp -> zvýrazní zápis do pozicového registru
-		hall -> zapne všechno zvýraznování
-		clsr -> překreslí UI konzole.                   // občas při zvětšování dělá konzole zmatky
+	hvar 		#zvírazní co adresi proměných
+	hvare 		#zvírazní konec proměnného prostoru 
+	hjmp 		#zvýrazní zápis do pozicového registru
+	hall 		#zapne všechno zvýraznování
+	clsr 		#překreslí UI konzole.                   // občas při zvětšování dělá konzole zmatky
 
-		step     -> provede jednu instrukci
-		clock xx -> nastaví rychlost hodin použitých pokud program běží
-		peek xx  -> zobrazí co register obsahuje
-		mv AAA BBB -> přesune obsah z registru AAA do registru BBB // v debug verzi je třeba zadávat jako mv001025 // 1 >> 25
-		
-		load     -> compile and load program
-		open     -> open program file
+	step      	#provede jednu instrukci
+	clock XXX 	#nastaví rychlost hodin použitých pokud program běží
+	peek XXX  	#zobrazí co register obsahuje
+	mv AAA BBB 	#přesune obsah z registru AAA do registru BBB // v debug verzi je třeba zadávat jako mv001025 // 1 >> 25
+	
+	load     	#compile and load program
+	open     	#open program file
+```
+
 
 # Co je MOVe?
 MOVe je programovací jazyk obsahující jen jedinou instrukci a to přesuň z adresy na adresu.
@@ -28,11 +30,11 @@ MOVe je programovací jazyk obsahující jen jedinou instrukci a to přesuň z a
 # Jak se v MOVe například sčítá když umí jen přesouvat registry?
 Procesor má mnoho registrů které zvládají jednoduché operace.
 Například:
-
-	  MOJE_CISLO ADD_A
-	  TVOJE_CISLO ADD_B
-	  ADD_OUT MONITOR
-
+```
+MOJE_CISLO ADD_A
+TVOJE_CISLO ADD_B
+ADD_OUT MONITOR
+```
 Tento kus kódu provede sečtení čísla v registru MOJE_CISLO a čísla TVOJE_CISLO,
 které zapíše na register MONITOR (viditelný v debugeru).
 
@@ -41,79 +43,143 @@ Vše o je za # je považované za komentář
 
 # Registry jazyka MOVe:
 
-        Konstanty:
-                [VAL_NULL]    obsahuje 0
-	        [VAL_ONE]     obsahuje 1
-		[VAL_TWO]     obsahuje 2
-		[VAL_FOUR]    obsahuje 4
-		[VAL_SIX]     obsahuje 6
-		[VAL_EIGHT]   obsahuje 8
-		[VAL_SIXTEEN] obsahuje 16 
-		[VAL_NEG]     obsahuje -1
+Regisry konstant(obsahují vždy číslo):
+```python
+VAL_NUL     #obsahuje 0
+VAL_ONE     #obsahuje 1
+VAL_TWO     #obsahuje 2
+VAL_FOUR    #obsahuje 4
+VAL_SIX     #obsahuje 6
+VAL_EIGHT   #obsahuje 8
+VAL_SIXTEEN #obsahuje 16 
+VAL_NEG     #obsahuje -1
 
-		[RAND]        obsahuje náhodné číslo
+RAND        #obsahuje náhodné číslo
+```
+Speciální Registry: 
+```python
+PROG_START
+PROG_POS         #obsahuje adresu dalšího příkazu
+PROG_NEXT	 #obsahuje adresu příkazu po 2 provedení
+PROG_NEXT_TWO    #obsahuje adresu příkazu po 3 provedení
+PROG_NEXT_THREE  #obsahuje adresu příkazu po 4 provedení
+PROG_NEXT_FOUR   #obsahuje adresu příkazu po 5 provedení
 
+G_POINTER        #register určený pro ukládání ukazování do paměi // !nedodělané
+MAX_MEM          #obsahuje velikost maximální paměti
+INTERUPT_JMP     #obsahuje adresu skoku při interuptu
+INTERUPT_MODE    #obsahuje zapnutí interuptu. Reaguje na [DISPLAY1], 0 = vyplé, 1 = při změně na HIGH, 2 = při změně na LOW, 3 = při HIGH i LOW. 
+PRE_INT_ADRESS   #obsahuje adresu ze kterého se do přerušení skočilo
 
-        Speciální Registry: 
-		[PROG_START]
-		[PROG_POS]        obsahuje adresu dalšího příkazu
-		[PROG_NEXT]	  obsahuje adresu příkazu po 2 provedení
-		[PROG_NEXT_TWO]   obsahuje adresu příkazu po 3 provedení
-		[PROG_NEXT_THREE] obsahuje adresu příkazu po 4 provedení
-		[PROG_NEXT_FOUR]  obsahuje adresu příkazu po 5 provedení
+MONITOR	  	 #register napojený na monitor v simulátoru
+	
+OUTPUT1
+OUTPUT2
+OUTPUT3
 
-		[G_POINTER]       register určený pro ukládání ukazování do paměi // !nedodělané
-		[MAX_MEM]         obsahuje velikost maximální paměti
-		[INTERUPT_JMP]    obsahuje adresu skoku při interuptu
-		[INTERUPT_MODE]   obsahuje zapnutí interuptu. Reaguje na [DISPLAY1], 0 = vyplé, 1 = při změně na HIGH, 2 = při změně na LOW, 3 = při HIGH i LOW. 
-		[PRE_INT_ADRESS]  obsahuje adresu ze kterého se do přerušení skočilo
+INPUT1
+INPUT2
+INPUT3
+```
+Matematické Registry(slouží k matematice):
+```python
+ADD_OUT = ADD_A + ADD_B
+SUB_OUT = SUB_A - SUB_B
+MUL_OUT = MUL_A * MUL_B
+DIV_OUT = DIV_A / DIV_B
+REM_OUT = REM_A % REM_B
+EQ_OUT  = EQ_A == EQ_B
+OR_OUT  = OR_A  | OR_B
+AND_OUT = AND_A && AND_B
 
-		[MONITOR]	  register napojený na monitor v simulátoru
+SHIFT_L_OUT = SHIFT_L_A << 1
+SHIFT_R_OUT = SHIFT_R_A >> 1
+
+SWITCH_OUT = SWITCH_S ? SWITCH_A : SWITCH_B
 		
-		[OUTPUT1]
-		[OUTPUT2]
-		[OUTPUT3]
-
-		[INPUT1]
-		[INPUT2]
-		[INPUT3]
-
-	Matematické Registry:
-		[ADD_OUT] = [ADD_A] + [ADD_B]
-		[SUB_OUT] = [SUB_A] - [SUB_B]
-		[MUL_OUT] = [MUL_A] * [MUL_B]
-		[DIV_OUT] = [DIV_A] / [DIV_B]
-		[REM_OUT] = [REM_A] % [REM_B]
-		[EQ_OUT]  = [EQ_A] == [EQ_B]
-		[OR_OUT]  = [OR_A]  | [OR_B]
-		[AND_OUT] = [AND_A] && [AND_B]
-
-		[SHIFT_L_OUT] = [SHIFT_L_A] << 1
-		[SHIFT_R_OUT] = [SHIFT_R_A] >> 1
-
-		[SWITCH_OUT] = [SWITCH_S] ? [SWITCH_A] : [SWITCH_B]
-		
-		[NEG_OUT] = ~[NEG_A] 
-
+NEG_OUT = ~NEG_A 
+```
 # Ukazování na adresy v jazyka MOVe:
 
 ## Pozice řádku
-toto vytvoří proměnou [NAME] obsahující číslo řádku na který ukazuje.
+Toto vytvoří proměnou [NAME] obsahující číslo řádku na který ukazuje.
 Použité třeba pro skoky.
-
-	[source][dest] <-NAME
-	
+```python
+[source][dest] <-NAME
+```	
 ## Adresa načítací instrukce
 Toto vytvoří vyrtuální proměnou [NAME] která všude v kódu je nahrazena adresou instrukce "source".
 Pouužité třeba pro načítání stringu z paměti. Přičítáním do [NAME] budeme totiž číst o registr dál
-	
-	[source][dest] {-NAME
-	
+```python
+[source][dest] {-NAME
+```	
 ## Adresa ukládací instrukce
 Toto vytvoří vyrtuální proměnou [NAME] která všude v kódu je nahrazena adresou instrukce "dest".
 Pouužité třeba pro ukládání stringu do paměti. Přičítáním do [NAME] budeme totiž psát do registru dál
+```python
+[source][dest] }-NAME
+```	
+## Příklad nezkompilovaného kódu:
+```python
+#Příklad skoku
+DATA: #informace kompileru kde jsou data (!nelze přehodit s code. musí být první!)
 
-	[source][dest] }-NAME
+	tim 0	#čítač (aby se něco dělo)
+	rtrn 69  #proměná do které uložíme kam se vracíme
+	
+CODE:	#informace kompileru kde začíná kód
+
+	VAL_NULL VAL_NULL #zbytečný řádek, jeho provedení nic nezmění. používá se pro debug protože debuger ho zvýrazní
+	
+	tim MONITOR <-LOOP  #loop který jen počítá a zapisuje na MONITOR.(ukazovátko na instrukci zapsaání na monitor)
+
+	PROG_NEXT rtrn #nasatvení navratu na na za funkc
+	FUNKCE PROG_POS #zavolání funkce
+
+	LOOP PROG_POS #konec loopu skočení na návěští LOOP
+
+	VAL_NULL VAL_NULL #zbytečný řádek, jeho provedení nic nezmění. používá se pro debug protože debuger ho zvýrazní
+	
+	  tim ADD_B    <-FUNKCE #návěští volané funkce co přidá k TIM 1 (uložení do sčitaciho registu)
+	  VAL_ONE ADD_A		#načtení 1 z registru obsaující 1
+	  ADD_OUT tim		#výsledek načteme zpět do tim
+	rtrn PROG_POS		vrácení z funkce
+```
+## Zkompilovaný kód(nedovoluje komentáře ty jous jen pro orientaci):
+Paměťový prostor vypisujeme od 100 protože před stovkou jsou sčítací registry
+```python
+106 #PROG_POS registr, na prvním řádku je vždy adresa první istrukce (také se zvyšuje s tím jak program poběží) [100]
+106 #na začátku setjné jako PROG_POS ale nezvyšuje se když se skáče, je dobré na restart programu               [101]
+108 #adresa návěští LOOP											[102]
+118 #adresa návěští FUNKCE											[103]
+0    #proměná tim												[104]
+69   #proměná rtrn												[105]
+0    #první instrukce načti                               							[106]
+0    #první instrukce vlož (tyto dvě instrukce jsou náš zbytečný řádek)                              		[107]
+104  #načtení z tim          		                   	               					[108]
+48   #vložení na monitor      		                     	               					[109]
+51   #načtení z [PROG_NEXT]											[110]
+105  #vložení na adresu promené [rtrn]										[111]
+103  #načtení z návěší(proměné) [FUNKCE]									[112]
+100  #vložení do PROG_POS čímž skočí na řádek obsažený v [FUNKCE] (kód pokračuje na řádku [118])		[113]
+102  #načtení návěští LOOP											[114]
+100  #vložení vložení do PROG_POS čímž skočí na řádek obsažený v [FUNKCE] (kód pokračuje na řádku [108])	[115]
+0    #načtení nuly												[116]
+0    #vložení vložení do registru nuly (tyto dvě instrukce jsou náš druhý zbytečný řádek)			[117]
+104  #načtení obsahu proměné [tim]										[118]
+11   #vložení do sčítacího registru [ADD_B]									[119]
+1    #načtení načtení 1 z [VAL_ONE]										[120]
+10   #vložení do sčítacího registru [ADD_A]									[121]
+12   #načtení vysledku z sčítacího registru [ADD_OUT]								[122]
+104  #vložení do rpoměné [tim]											[123]
+105  #načtení načtení proměné [rtrn] kam jsem si uložili kam se program má vratit				[124]
+100  #vložení do PROG_POS čímž skočí na řádek obsažený v [FUNKCE] (kód pokračuje na řádku [102])		[125]
+
+```
+## Zkompilovaný kód(zvýraznený barvamy v interpretu):
+![IDK](https://user-images.githubusercontent.com/59420562/230725176-319d7a69-c20e-4b12-834d-8fa500fcd93f.png)
+
+
 
 # Struktura Jazyka MOVe(Compi 1.02):
 
