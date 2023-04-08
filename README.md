@@ -27,7 +27,6 @@
 
 # Jak se v MOVe například sčítá když umí jen přesouvat registry?
 Procesor má mnoho registrů které zvládají jednoduché operace.
-	
 Například:
 
 	  MOJE_CISLO ADD_A
@@ -36,6 +35,7 @@ Například:
 
 Tento kus kódu provede sečtení čísla v registru MOJE_CISLO a čísla TVOJE_CISLO,
 které zapíše na register MONITOR (viditelný v debugeru).
+
 
 # Registry jazyka MOVe:
 
