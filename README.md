@@ -1,6 +1,6 @@
-# Toto je interpret a debugovací program pro MOVe
+## Toto je interpret a debugovací program pro MOVe
 ![Snímek obrazovky 2023-04-08 142912](https://user-images.githubusercontent.com/59420562/230721129-a7f1dd1f-1905-463d-9922-a4c3632c4acd.png)
-# Co interpret umožňuje?
+## Co interpret umožňuje?
 Umožňuje náhled na která instrukce se v kódu provádí.
 Má příkazi na debug:
 
@@ -22,10 +22,10 @@ Má příkazi na debug:
 		load     -> compile and load program
 		open     -> open program file
 
-# Co je MOVe?
+## Co je MOVe?
 MOVe je programovací jazyk obsahující jen jedinou instrukci a to přesuň z adresy na adresu.
 
-# Jak se v MOVe například sčítá když umí jen přesouvat registry?
+## Jak se v MOVe například sčítá když umí jen přesouvat registry?
 Procesor má mnoho registrů které zvládají jednoduché operace.
 Například:
 
@@ -36,8 +36,10 @@ Například:
 Tento kus kódu provede sečtení čísla v registru MOJE_CISLO a čísla TVOJE_CISLO,
 které zapíše na register MONITOR (viditelný v debugeru).
 
+## komentáře v jazyce MOVe:
+Vše o je za # je považované za komentář
 
-# Registry jazyka MOVe:
+## Registry jazyka MOVe:
 
         Konstanty:
                 [VAL_NULL]    obsahuje 0
@@ -93,8 +95,27 @@ které zapíše na register MONITOR (viditelný v debugeru).
 		
 		[NEG_OUT] = ~[NEG_A] 
 
+## Ukazování na adresy v jazyka MOVe:
 
-# Struktura Jazyka MOVe(Compi 1.02):
+#Pozice řádku
+toto vytvoří proměnou [NAME] obsahující číslo řádku na který ukazuje.
+Použité třeba pro skoky.
+
+	[source][dest] <-NAME
+	
+#Adresa načítací instrukce
+Toto vytvoří vyrtuální proměnou [NAME] která všude v kódu je nahrazena adresou instrukce "source".
+Pouužité třeba pro načítání stringu z paměti. Přičítáním do [NAME] budeme totiž číst o registr dál
+	
+	[source][dest] {-NAME
+	
+#Adresa ukládací instrukce
+Toto vytvoří vyrtuální proměnou [NAME] která všude v kódu je nahrazena adresou instrukce "dest".
+Pouužité třeba pro ukládání stringu do paměti. Přičítáním do [NAME] budeme totiž psát do registru dál
+
+	}-NAME
+
+## Struktura Jazyka MOVe(Compi 1.02):
 
 	[FUNKČNÍ REGISTRY] #tady se nachází registry jako ADD_A,ADD_B a další 
 		...
