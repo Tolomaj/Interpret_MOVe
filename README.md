@@ -97,19 +97,19 @@ Vše o je za # je považované za komentář
 
 ## Ukazování na adresy v jazyka MOVe:
 
-#Pozice řádku
+# Pozice řádku
 toto vytvoří proměnou [NAME] obsahující číslo řádku na který ukazuje.
 Použité třeba pro skoky.
 
 	[source][dest] <-NAME
 	
-#Adresa načítací instrukce
+# Adresa načítací instrukce
 Toto vytvoří vyrtuální proměnou [NAME] která všude v kódu je nahrazena adresou instrukce "source".
 Pouužité třeba pro načítání stringu z paměti. Přičítáním do [NAME] budeme totiž číst o registr dál
 	
 	[source][dest] {-NAME
 	
-#Adresa ukládací instrukce
+# Adresa ukládací instrukce
 Toto vytvoří vyrtuální proměnou [NAME] která všude v kódu je nahrazena adresou instrukce "dest".
 Pouužité třeba pro ukládání stringu do paměti. Přičítáním do [NAME] budeme totiž psát do registru dál
 
