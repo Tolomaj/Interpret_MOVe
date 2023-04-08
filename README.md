@@ -1,6 +1,6 @@
-Toto je interpret a debugovací program pro MOVe
+# Toto je interpret a debugovací program pro MOVe
 
-Co interpret umožňuje?
+# Co interpret umožňuje?
 	Umožňuje náhled na která instrukce se v kódu provádí.
 
 	Má příkazi na debug:
@@ -19,10 +19,10 @@ Co interpret umožňuje?
 		peek xx  -> zobrazí co register obsahuje
 		mv AAA BBB -> přesune obsah z registru AAA do registru BBB // v debug verzi je třeba zadávat jako mv001025 // 1 >> 25
 
-Co je MOVe?
+# Co je MOVe?
 	MOVe je programovací jazyk obsahující jen jedinou instrukci a to přesuň z adresy na adresu.
 
-Jak se v MOVe například sčítá když umí jen přesouvat registry?
+# Jak se v MOVe například sčítá když umí jen přesouvat registry?
 	Procesor má mnoho registrů které zvládají jednoduché operace.
 	
 	Například:
@@ -34,11 +34,11 @@ Jak se v MOVe například sčítá když umí jen přesouvat registry?
 	Tento kus kódu provede sečtení čísla v registru MOJE_CISLO a čísla TVOJE_CISLO,
 	které zapíše na register MONITOR (viditelný v debugeru).
 
+# Registry jazyka MOVe:
 
-Registry jazyka MOVe:
-	Konstanty:
-		[VAL_NULL]    obsahuje 0
-		[VAL_ONE]     obsahuje 1
+        Konstanty:
+                [VAL_NULL]    obsahuje 0
+	        [VAL_ONE]     obsahuje 1
 		[VAL_TWO]     obsahuje 2
 		[VAL_FOUR]    obsahuje 4
 		[VAL_SIX]     obsahuje 6
@@ -48,9 +48,7 @@ Registry jazyka MOVe:
 
 		[RAND] obsahuje náhodné číslo
 
-	Speciální Registry: 
-
-
+        Speciální Registry: 
 		[PROG_START]
 		[PROG_POS]
 
@@ -101,7 +99,7 @@ Registry jazyka MOVe:
 
 
 
-Struktura Jazyka MOVe(Compi 1.02):
+# Struktura Jazyka MOVe(Compi 1.02):
 
 	[FUNKČNÍ REGISTRY] #tady se nachází registry jako ADD_A,ADD_B a další 
 		...
