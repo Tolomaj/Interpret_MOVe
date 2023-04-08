@@ -1,9 +1,9 @@
 # Toto je interpret a debugovací program pro MOVe
 ![Snímek obrazovky 2023-04-08 142912](https://user-images.githubusercontent.com/59420562/230721129-a7f1dd1f-1905-463d-9922-a4c3632c4acd.png)
 # Co interpret umožňuje?
-	Umožňuje náhled na která instrukce se v kódu provádí.
+Umožňuje náhled na která instrukce se v kódu provádí.
+Má příkazi na debug:
 
-	Má příkazi na debug:
 		run -> spustí simulaci
 		stop -> zastaví simulaci
 		key -> připojí klávesnici na vstup
@@ -23,7 +23,7 @@
 		open     -> open program file
 
 # Co je MOVe?
-	MOVe je programovací jazyk obsahující jen jedinou instrukci a to přesuň z adresy na adresu.
+MOVe je programovací jazyk obsahující jen jedinou instrukci a to přesuň z adresy na adresu.
 
 # Jak se v MOVe například sčítá když umí jen přesouvat registry?
 Procesor má mnoho registrů které zvládají jednoduché operace.
