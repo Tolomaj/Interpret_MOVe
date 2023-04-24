@@ -1,22 +1,44 @@
+INCLUDE library.base
+
 #JUMP EXAMPLE
 # 
 
+MACRO CALL:  
+	PROG_NEXT RTRN #nasatvení navratu na na za funkcí
+	$0 PROG_POS #zavolání funkce
+	$0 $0
+MACRO_END
+ 
+
+MACRO RETURN:  
+	RTRN PROG_POS
+MACRO_END
 
 DATA:
 	TIM 0	#čítač (aby se něco dělo)
 	RTRN 0  #proměná do které uložíme kam se vracíme
+	POLE  1
+	- 2
+	- 3
+	- 4
+	- 5
 CODE:
 
-	VAL_NULL VAL_NULL <-LOOP #loop který jen počítá a zapisuje na MONITOR
+	VAL_NULL   VAL_NULL <-LOOP #loop který jen počítá a zapisuje na MONITOR <-kk
 
-	PROG_NEXT RTRN #nasatvení navratu na na za funkcí
-	FUNKCE PROG_POS #zavolání funkce
+
+	CALL FUNKCE # tst
+
+	#PROG_NEXT RTRN #nasatvení navratu na na za funkcí 
+	#FUNKCE PROG_POS #zavolání funkce
 
 	TIM MONITOR
-	LOOP PROG_POS #konec loopu
+	CODE PROG_POS #konec loopu 
 
 	VAL_NULL VAL_NULL
 	  TIM ADD_B    <-FUNKCE # Ukazovátko vytvoří proměnou obsahující adresu na instrukci na stejném řádku 
 	  VAL_ONE ADD_A
-	  ADD_OUT TIM
-	RTRN PROG_POS
+	  ADD_OUT TIM 		{-kok
+	RETURN 			    {-kk
+	kk kk
+FILE_END:

@@ -80,9 +80,9 @@ void executeComand(string comandBuffer) {
 	}
 	else if (comandBuffer == "load") {
 		system("cls");
-		int rtrn = system("py compi.py");
+		int rtrn = system("py compiler.py");
 		if (rtrn == 0) {
-			cDis.print("Loading new program!",CLR_BLUE);
+			cDis.print("Loading new program :)!",CLR_BLUE);
 			totalRST = true;
 		} else {
 			cout << "Press any key to continue.";
