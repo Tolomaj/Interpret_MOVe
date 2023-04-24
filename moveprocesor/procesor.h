@@ -6,7 +6,7 @@ using namespace std;
 #define CELL_TYPE int16_t
 #define CELL_MAX 32767
 
-#define MEMORY_BLOCK_SIZE 500 // 2^16 should be
+#define MEMORY_BLOCK_SIZE 65536 // 2^16 should be
 #define START_ADRESS 100
 
 #define VAL_NULL    0 // 0

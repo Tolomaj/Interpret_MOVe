@@ -8,7 +8,7 @@ FILE_IN = "code.base"
 FILE_OUT = "code.code"
 
 START_ADDRESS = 100
-MEMORY_SIZE = 500
+MEMORY_SIZE = 65536
 
 NMS = ["CODE"         ,"PROG_POS"    ,"VAL_NULL","VAL_ONE","VAL_TWO","VAL_FOUR","VAL_SIX","VAL_EIGHT","VAL_SIXTEEN","VAL_NEG","MEM_END","ADD_A","ADD_B","ADD_OUT","SUB_A","SUB_B","SUB_OUT","MUL_A","MUL_B","MUL_OUT","DIV_A","DIV_B","DIV_OUT","REM_A","REM_B","REM_OUT","EQ_A","EQ_B","EQ_OUT","SHIFT_L_A","SHIFT_L_OUT","SHIFT_R_A","SHIFT_R_OUT","OR_A","OR_B","OR_OUT","AND_A","AND_B","AND_OUT","NEG_A","NEG_OUT","OUTPUT1","OUTPUT2","OUTPUT3","INPUT1","INPUT2","INPUT3","MONITOR","INTERUPT_JMP","PRE_INT_ADRESS","PROG_NEXT","PROG_NEXT_TWO","PROG_NEXT_THREE","PROG_NEXT_FOUR","SWITCH_A", "SWITCH_B", "SWITCH_S", "SWITCH_OUT","RAND","INTERUPT_MODE"]
 ADR = [START_ADDRESS+1,START_ADDRESS ,0         ,1        ,2        ,3         ,4          ,5          ,6            ,7      ,9        ,10     ,11     ,12       ,13     ,14     ,15       ,16     ,17     ,18       ,19     ,20     ,21       ,22     ,23     ,24       ,25    ,26    ,27      ,28         ,29           ,30         ,31           ,32    ,34    ,35      ,36     ,37     ,38       ,39     ,40       ,42       ,43       ,44       ,45      ,46      ,47      ,48       ,49            ,50              ,51         ,52             ,53               ,54              ,55        ,56         ,57         ,58           ,59    ,60             ]
