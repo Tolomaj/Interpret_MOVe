@@ -1,14 +1,16 @@
-MACRO PRINT:
+
+
+MACRO PRINT:	# makro print
 	VAL_NULL OUTPUT2 #nastaveni nabezne hrany dolu
 	$0 OUTPUT3			  
 	VAL_TWO OUTPUT2		  #poslání znaku
 MACRO_END
 
 
-MACRO INCR:
-	$0 ADD_B
-	VAL_ONE ADD_A 
-	ADD_OUT $0
+MACRO DECREM:	# makro dekrementace
+	$0 SUB_A
+	VAL_ONE SUB_B 
+	SUB_OUT  $0
 MACRO_END
 
 
@@ -16,25 +18,26 @@ MACRO_END
 DATA:
 	TMP_MSG_STORE 0
 
-	POLE  72     #nase veta znak "H"
+	- 0		     #			     0
+	- 72        #nase veta znak "H"
 	- 101	     #další znak     "e"
 	- 108		 #				 "l"
-	- 108		 #				 "l"
+	- 108		 #   			 "l"
 	- 111		 #			     "o"
-	- 95		 #			     "_"
-	- 119		 #			     "w"
+NUL_CH 95		 #			     "_"  do pole muzeme pridat ukazovatko	kamkoli
+	- 119		 #			     "w" 
 	- 111		 #			     "o"
 	- 114		 #			     "r"
 	- 108		 #			     "l"
-	- 100		 #			     "d"
-	- 0		     #			     0
-CODE:
+	MSG 100		 #cteme od zadu  "d"
 
+CODE:
 
 	MSG_ADR TMP_MSG_STORE #uloženi momentalni adresi na kterou ukazuje msg
 
 	# ukonceni vypisu pokud je 0
-	MSG EQ_A			  {-MSG_ADR #nastavení
+	VAL_NULL VAL_NULL 
+	MSG EQ_A			  {-MSG_ADR <-LOOP #nastavení
 	VAL_NULL EQ_B
 
 	EQ_OUT SWITCH_S	
@@ -45,10 +48,23 @@ CODE:
 
 	PRINT EQ_A
 
-	INCR MSG_ADR
+	DECREM MSG_ADR
+
+	LOOP PROG_POS
+
+	VAL_NULL VAL_NULL <-END #zacikleni programu pro odcikleni se dají pouzit preruseni napr.						#pokud chceme program spustit dál napiseme do terminalu "mv 155 100"
+
+	TMP_MSG_STORE MSG_ADR	# resetovani MSG místa v paměti aby se četlo zase od zacatku pole
+
+	STOP PROG_POS <-STOP
+
+	PRINT NUL_CH <-RN
+	PRINT NUL_CH #napiše 4 mezery
+	PRINT NUL_CH
+	PRINT NUL_CH
+
 
 	CODE PROG_POS
-
 
 	
 FILE_END:		#Toto je dobrovolé, kompilátor si toto sám umí doplnit
