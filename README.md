@@ -181,6 +181,8 @@ Paměťový prostor vypisujeme od 100 protože před stovkou jsou sčítací reg
 
 
 
+## Kompilátor:
+Soubor compiler.py je kompilátor který z move kódu udělá číselný kód čitelný interpretem.
 
 
 
