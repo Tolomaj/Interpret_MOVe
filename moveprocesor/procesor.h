@@ -73,7 +73,7 @@ using namespace std;
 #define INPUT3   47
 
 #define MONITOR        48 //recrete INTERUP_MODE 
-#define INTERUPT_JMP   49 // debug if 1 restart program
+#define INTERUPT_JMP   49 
 #define PRE_INT_ADRESS 50
 
 #define PROG_NEXT       51  //adressa další instrukce

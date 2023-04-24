@@ -18,7 +18,8 @@ void initC() {
 void clearC() {
 	system("cls");
 	string progPos = "PROG_POS[" + to_string(PROG_POS) + "] : " + to_string(memoryBlock[PROG_POS]);
-	string run = "RUN[" + to_string(RUN) + "] : " + to_string(memoryBlock[RUN]);
+	string 
+		= "RUN[" + to_string(RUN) + "] : " + to_string(memoryBlock[RUN]);
 	string monit = "MONITOR[" + to_string(MONITOR) + "] : " + to_string(memoryBlock[MONITOR]);
 
 	string alo = progPos + " | " + run + " | " + monit;
