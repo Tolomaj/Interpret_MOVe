@@ -181,8 +181,51 @@ Paměťový prostor vypisujeme od 100 protože před stovkou jsou sčítací reg
 
 
 
+# Kompilátor:
+Soubor compiler.py je kompilátor který z move kódu udělá číselný kód čitelný interpretem.
+Interpret automaticky při příkazu load zkompiluje soubor code.base na code.code který pak načítá.
+To ale uživatel může udělat sám (třeba při poruše souboru code.code) si může zkompilovat a nahradit code.code sám
+Kompilátor umžnuje používat makra a spojovat víe souboru (do jisté míry)
+##help kompilátoru:
+![image](https://user-images.githubusercontent.com/59420562/234114975-bb290131-7052-49b4-8cab-f4974a84c9cf.png)
+```python
+INCLUDE library.base  # vložení souboru. jakoby spojí soubory. Zatím lze pouze psát v hlavním souboru
 
+MACRO CALL:  # definice makra CALL , CALL se všude v kódu nahradí tímto
+	PROG_NEXT RTRN #nasatvení navratu na na za funkcí
+	$0 PROG_POS #zavolání funkce. $0 je prní parametr CALL
+MACRO_END	# konec makra
+ 
 
+MACRO RETURN:  
+	
+MACRO_END
+
+DATA:
+	TIM 0	#proměná
+	RTRN 0  #proměná do které uložíme kam se vracíme
+	POLE  1 #první položka pole. Proměné jou do paměti zapisovány za sebou
+	- 2		#další položka pole. Tudíž víme že tato bude hned za začátkem
+	- 3		#další položka pole. Compiler - nepovažuje za opetovnou deklarace proměné
+	- 4
+	- 5
+CODE:
+
+	VAL_NULL  VAL_NULL <-LOOP #zbytečný řádek, nic nedělá protože zapíše z 0 do 0 tudíš se nic nezmění
+
+	CALL FUNKCE # použití makra na zavolání funkce
+
+	TIM MONITOR }-DESTINACE # všude v kódu se nahradí "DESTINACE" za dresu registru MONITOR
+
+	CODE PROG_POS # CODE je ukazovátko na začátek programu (prví CODE:)
+
+	VAL_NULL VAL_NULL
+	  TIM ADD_B    <-FUNKCE # Ukazovátko vytvoří proměnou obsahující adresu na instrukci na stejném řádku 
+	  VAL_ONE ADD_A
+	  ADD_OUT TIM 		{-ZDROJ # všude v kódu se nahradí "ZDROJ" za dresu registru ADD_OUT
+	RTRN PROG_POS    #vrácení se na místo odkud jsme funkci volali
+FILE_END:		#Toto je dobrovolé, kompilátor si toto sám umí doplnit
+```
 
 # Struktura Jazyka MOVe(Compi 1.02):
 ```python
