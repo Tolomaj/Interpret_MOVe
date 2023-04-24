@@ -8,7 +8,7 @@ FILE_IN = "code.base"
 FILE_OUT = "code.code"
 
 START_ADDRESS = 100
-MEMORY_SIZE = 65536
+MEMORY_SIZE = 500
 
 NMS = ["CODE"         ,"PROG_POS"    ,"VAL_NULL","VAL_ONE","VAL_TWO","VAL_FOUR","VAL_SIX","VAL_EIGHT","VAL_SIXTEEN","VAL_NEG","MEM_END","ADD_A","ADD_B","ADD_OUT","SUB_A","SUB_B","SUB_OUT","MUL_A","MUL_B","MUL_OUT","DIV_A","DIV_B","DIV_OUT","REM_A","REM_B","REM_OUT","EQ_A","EQ_B","EQ_OUT","SHIFT_L_A","SHIFT_L_OUT","SHIFT_R_A","SHIFT_R_OUT","OR_A","OR_B","OR_OUT","AND_A","AND_B","AND_OUT","NEG_A","NEG_OUT","OUTPUT1","OUTPUT2","OUTPUT3","INPUT1","INPUT2","INPUT3","MONITOR","INTERUPT_JMP","PRE_INT_ADRESS","PROG_NEXT","PROG_NEXT_TWO","PROG_NEXT_THREE","PROG_NEXT_FOUR","SWITCH_A", "SWITCH_B", "SWITCH_S", "SWITCH_OUT","RAND","INTERUPT_MODE"]
 ADR = [START_ADDRESS+1,START_ADDRESS ,0         ,1        ,2        ,3         ,4          ,5          ,6            ,7      ,9        ,10     ,11     ,12       ,13     ,14     ,15       ,16     ,17     ,18       ,19     ,20     ,21       ,22     ,23     ,24       ,25    ,26    ,27      ,28         ,29           ,30         ,31           ,32    ,34    ,35      ,36     ,37     ,38       ,39     ,40       ,42       ,43       ,44       ,45      ,46      ,47      ,48       ,49            ,50              ,51         ,52             ,53               ,54              ,55        ,56         ,57         ,58           ,59    ,60             ]
@@ -103,6 +103,9 @@ for line in open(FILE_IN, 'r').readlines(): #načtení kodu z souboru
 	if line != '':
 		linesArr.append(lineO(line,lineId,FILE_IN)) # každá linka má své číslo aby se dala dohledat chyba při překladu
 	lineId = lineId + 1
+if not linesArr[-1].text.startswith("FILE_END:"):
+		linesArr.append(lineO("FILE_END:",lineId,FILE_IN)) # ukončení souboru pokud není ukončený aby byli ukončeny sekce data a code
+
 # základní uprava END
 
 
@@ -118,13 +121,16 @@ for line in linesArr:
 			nFileLine = nFileLine.split('#', 1)[0]            #odstranení komentářu
 			nFileLine = " ".join(nFileLine.split())           #odstranení nadbytečných tabů a mezer
 			if nFileLine != '':
-				INCLUDED_FILES_LINES.append(lineO(nFileLine,lineId,sourceFile)) # každá linka má své číslo aby se dala dohledat chyba při překladu
+				linesArr.append(lineO(nFileLine,lineId,sourceFile)) # každá linka má své číslo aby se dala dohledat chyba při překladu
 			lineId = lineId + 1
-		if not INCLUDED_FILES_LINES[-1].text.startswith("FILE_END:"):
-			INCLUDED_FILES_LINES.append(lineO("FILE_END:",lineId,sourceFile)) # ukončení souboru pokud není ukončený aby byli ukončeny sekce data a code
+		if not linesArr[-1].text.startswith("FILE_END:"):
+			linesArr.append(lineO("FILE_END:",lineId,sourceFile)) # ukončení souboru pokud není ukončený aby byli ukončeny sekce data a code
 
-linesArr = INCLUDED_FILES_LINES + linesArr
 
+for c in linesArr:
+	print(c.text)
+
+print("*-----")
 
 #extrakce promenych
 inDataSection = 0
@@ -353,6 +359,7 @@ if "-shMerg" in sys.argv:
 
 COMPILED_CODE = []	
 COMPILED_CODE_ER_LINER = []
+COMPILED_CODE_ER_FILE = []
 
 JMP_ARR = []
 SORCEDR_ARR = []
@@ -367,11 +374,15 @@ COMPILED_CODE.append(0)
 COMPILED_CODE_ER_LINER.append(0)
 COMPILED_CODE_ER_LINER.append(0)
 
+COMPILED_CODE_ER_FILE.append(0)
+COMPILED_CODE_ER_FILE.append(0)
+
 for cmdL in CMD_LIST:
 	if cmdL.linePOINT:
 		JMP_ARR.append(jmpT(cmdL.linePOINT,len(COMPILED_CODE))) # podržení místa na skokové proměne
 		COMPILED_CODE.append(0)
 		COMPILED_CODE_ER_LINER.append(cmdL.lineID)
+		COMPILED_CODE_ER_FILE.append(cmdL.originFileNAME)
 
 for var in variables:
 	tVAR_ARR.append(jmpT(var.name,len(COMPILED_CODE)))
@@ -395,6 +406,8 @@ for inst in CMD_LIST: # roztaženi programu na radky
 	COMPILED_CODE.append(inst.dest)
 	COMPILED_CODE_ER_LINER.append(inst.lineID)
 	COMPILED_CODE_ER_LINER.append(inst.lineID)
+	COMPILED_CODE_ER_FILE.append(inst.originFileNAME)
+	COMPILED_CODE_ER_FILE.append(inst.originFileNAME)
 
 
 
@@ -437,7 +450,7 @@ err = 0
 for i in range(len(COMPILED_CODE)):
 	if type(COMPILED_CODE[i]) != int:
 		err = 1
-		print(colored("Nerozpozaný výraz: ",'red') + colored(COMPILED_CODE[i],'dark_grey') +  colored(" na radku: ",'red') + colored(COMPILED_CODE_ER_LINER[i],'dark_grey') +  colored("!",'red'))
+		print(colored("Nerozpozaný výraz: ",'red') + colored(COMPILED_CODE[i],'dark_grey') +  colored(" na radku: ",'red') + colored(COMPILED_CODE_ER_FILE[i] +":"+ str(COMPILED_CODE_ER_LINER[i]),'dark_grey') +  colored("!",'red'))
 		exit(1)
 
 if err == 1 :

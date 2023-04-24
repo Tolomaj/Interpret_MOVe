@@ -1,2 +1,7 @@
+
 DATA:
-	pi 10
+	ten 10
+
+CODE:
+	VAL_NULL VAL_NULL
+	VAL_NULL VAL_NULL
