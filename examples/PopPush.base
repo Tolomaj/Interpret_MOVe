@@ -1,0 +1,54 @@
+#push and pop example
+
+MACRO push:
+  VLREG ADD_A
+  VAL_ONE ADD_B
+  ADD_OUT VLREG #incrementuje VLREG(start stacku)
+  
+   VLREG MEM_ADR #zapíše VLREG do MEM_ADR (použite ve funkci co zaspise z pameti)
+   $0 MEM_VAL
+   
+   PROG_NEXT RTRN_VAL # nastaveni navratove hodnoty z primitivni funkce
+   SAVEF PROG_POS #zavola funkci uložení 
+MACRO_END
+
+MACRO pop:
+  VLREG SUB_A
+  VAL_ONE SUB_B
+  SUB_OUT  VLREG  #dekrementuje VLREG(start stacku)
+  
+  VLREG MEM_ADR #zapíše VLREG do MEM_ADR (použite ve funkci co precte z pameti)
+  MEM_VAL $0 
+   
+   PROG_NEXT RTRN_VAL # nastaveni navratove hodnoty z primitivni funkce
+   LOADF PROG_POS #zavola funkci nacteni 
+MACRO_END
+
+DATA:
+   VLREG 500
+   MEM_VAL 0
+   MEM_ADR 0
+   RTRN_VAL 0
+CODE:
+
+   push VAL_ONE
+   push VAL_TWO
+   push VAL_EIGHT
+
+   pop MONITOR
+   pop MONITOR
+   pop MONITOR
+
+CODE PROG_POS
+	VAL_NULL VAL_NULL
+   
+   MEM_ADR MEM_WRT_ADR <-SAVEF
+   MEM_VAL VAL_NULL }-MEM_WRT_ADR
+   RTRN_VAL PROG_POS
+
+
+   MEM_ADR MEM_LOAD_ADR <-LOADF
+   VAL_NULL MEM_VAL {-MEM_LOAD_ADR
+   RTRN_VAL PROG_POS
+
+

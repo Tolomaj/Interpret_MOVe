@@ -1,4 +1,8 @@
-
+#ukazka vypsaní řetězce na display
+# {-MSG_ADR  vezme adresu příkazu od kud se bere znak
+# ten se pak inkrementuje
+# abychom mohli ciklit musíme si hodnotu prikazu uložit před tím nez zacneme pocitat
+# pouzivame mnakra pro prehlednost
 
 MACRO PRINT:	# makro print
 	VAL_NULL OUTPUT2 #nastaveni nabezne hrany dolu
@@ -7,7 +11,7 @@ MACRO PRINT:	# makro print
 MACRO_END
 
 
-MACRO DECREM:	# makro dekrementace
+MACRO DECREM:	# makro dekrementace 
 	$0 SUB_A
 	VAL_ONE SUB_B 
 	SUB_OUT  $0
@@ -19,7 +23,7 @@ DATA:
 	TMP_MSG_STORE 0
 
 	- 0		     #			     0
-	- 72        #nase veta znak "H"
+	- 72         #nase veta znak "H"
 	- 101	     #další znak     "e"
 	- 108		 #				 "l"
 	- 108		 #   			 "l"

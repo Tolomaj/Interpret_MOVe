@@ -1,70 +1,14 @@
-
-
-MACRO PRINT:	# makro print
-	VAL_NULL OUTPUT2 #nastaveni nabezne hrany dolu
-	$0 OUTPUT3			  
-	VAL_TWO OUTPUT2		  #poslání znaku
-MACRO_END
-
-
-MACRO DECREM:	# makro dekrementace
-	$0 SUB_A
-	VAL_ONE SUB_B 
-	SUB_OUT  $0
-MACRO_END
-
+# Odeslání jednoho znaku na display v loopu
+# display jao periferie čeká na náběznou hranu na druém bitu OUTPUT2 tedy VAL_TWO(0100000>) 
+# pokud dojde k nabezne hrane zapiše na display obsah OUTPUT3
 
 
 DATA:
-	TMP_MSG_STORE 0
-
-	- 0		     #			     0
-	- 72        #nase veta znak "H"
-	- 101	     #další znak     "e"
-	- 108		 #				 "l"
-	- 108		 #   			 "l"
-	- 111		 #			     "o"
-NUL_CH 95		 #			     "_"  do pole muzeme pridat ukazovatko	kamkoli
-	- 119		 #			     "w" 
-	- 111		 #			     "o"
-	- 114		 #			     "r"
-	- 108		 #			     "l"
-	MSG 100		 #cteme od zadu  "d"
-
+	ZNAK  65 #znak pro vypsání 'A'
 CODE:
 
-	MSG_ADR TMP_MSG_STORE #uloženi momentalni adresi na kterou ukazuje msg
+	VAL_NULL OUTPUT2 #nastaveni nabezne hrany dolu
+	ZNAK OUTPUT3	 # nastaveni zanku		  
+	VAL_TWO OUTPUT2		  #poslání znaku
 
-	# ukonceni vypisu pokud je 0
-	VAL_NULL VAL_NULL 
-	MSG EQ_A			  {-MSG_ADR <-LOOP #nastavení
-	VAL_NULL EQ_B
-
-	EQ_OUT SWITCH_S	
-	
-	END SWITCH_A
-	PROG_NEXT SWITCH_B
-	SWITCH_OUT PROG_POS # skoci pokud je MSG 0
-
-	PRINT EQ_A
-
-	DECREM MSG_ADR
-
-	LOOP PROG_POS
-
-	VAL_NULL VAL_NULL <-END #zacikleni programu pro odcikleni se dají pouzit preruseni napr.						#pokud chceme program spustit dál napiseme do terminalu "mv 155 100"
-
-	TMP_MSG_STORE MSG_ADR	# resetovani MSG místa v paměti aby se četlo zase od zacatku pole
-
-	STOP PROG_POS <-STOP
-
-	PRINT NUL_CH <-RN
-	PRINT NUL_CH #napiše 4 mezery
-	PRINT NUL_CH
-	PRINT NUL_CH
-
-
-	CODE PROG_POS
-
-	
-FILE_END:		#Toto je dobrovolé, kompilátor si toto sám umí doplnit
+	CODE PROG_POS # opakováni programu
