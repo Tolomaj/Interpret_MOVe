@@ -270,12 +270,14 @@ def replaceMacro(linesArr):
 for i in range(50): # opravit momentálně zvládne jen 50 zanořených maker
 	for macroInd in range(len(MACRO_LIST)): #ASI FUNGUJE IDK
 		MACRO_LIST[macroInd].content = replaceMacro(MACRO_LIST[macroInd].content);#ASI FUNGUJE IDK
-
+'''
 for macroInd in range(len(MACRO_LIST)):
 	print("mnm:",MACRO_LIST[macroInd].name)
 	for line in MACRO_LIST[macroInd].content :
 		print("  mcont:",line.text) # check for macro line 
 				#nahrazeni macra
+'''
+
 
 
 
@@ -284,14 +286,8 @@ for macroInd in range(len(MACRO_LIST)):
 
 
 # nahrazení maker a uložení do souboru
-print("kostra")
-for line in linesArr :
-	print(line.text)
 
 linesArr = replaceMacro(linesArr) # dodělat lokální skoky makra
-
-for line in linesArr :
-	print(line.text)
 
 # nahrazení maker a uložení do souboru END
 
