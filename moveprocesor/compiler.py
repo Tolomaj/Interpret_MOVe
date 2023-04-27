@@ -15,6 +15,8 @@ NMS = ["CODE"         ,"PROG_POS"    ,"VAL_NULL","VAL_ONE","VAL_TWO","VAL_FOUR",
 ADR = [START_ADDRESS+1,START_ADDRESS ,0         ,1        ,2        ,3         ,4          ,5          ,6            ,7      ,9        ,10     ,11     ,12       ,13     ,14     ,15       ,16     ,17     ,18       ,19     ,20     ,21       ,22     ,23     ,24       ,25    ,26    ,27      ,28         ,29           ,30         ,31           ,32    ,34    ,35      ,36     ,37     ,38       ,39     ,40       ,42       ,43       ,44       ,45      ,46      ,47      ,48       ,49            ,50              ,51         ,52             ,53               ,54              ,55        ,56         ,57         ,58           ,59    ,60             ]
 
 
+LOCAL_MACRO_IDNTFR = "_macro_local_jump_idx"
+
 def replace(arr, old_val, new_val):
     for i in range(len(arr)):
         if arr[i] == old_val:
@@ -211,25 +213,46 @@ if err == 1:
 def replaceMacro(linesArr):
 	err = 0
 	replacedLines = []
+	macroNUM = 0
 	for line in linesArr:
 		isMacroLine = 0
 		for macroDTA in MACRO_LIST:
 			if line.text.startswith(macroDTA.name+" "): # když na řádku je makro
+				macroNUM = macroNUM + 1
 				macroArg = line.text[len(macroDTA.name):].split() # vzaní arumentů
 				isMacroLine = 1
 				lnArg = ""
-				for lpoin in macroArg: # uloží ukazovátka řádku
+				for lpoin in macroArg: # uloží ukazovátka řádku volání makra
 					if lpoin.startswith('<-') or lpoin.startswith('{-') or lpoin.startswith('}-'):
-						#kontrola že jsou poslední a zajimy není už parametr dodělat
 						macroArg.remove(lpoin)
 						lnArg = lnArg + lpoin
 						if lnArg[0] != " ":
 							lnArg = " " + lnArg
 
+				pointersList = []
+				for macroLine in macroDTA.content: #uložení ukazovátek aby se mohli nahradit
+					for lpoin in macroLine.text.split():
+						if lpoin.startswith('<-') or lpoin.startswith('{-') or lpoin.startswith('}-'):
+							pointersList.append([lpoin,lpoin+LOCAL_MACRO_IDNTFR + str(macroNUM)])
+				#print(pointersList)
 				for macroLine in macroDTA.content:
+					
+					#nahrazení ukazovátek maker 
+					#
+					localLine = ""
 
+					for word in macroLine.text.split():
+						nwword = word
+						for name,pseudo in pointersList:
+							if word == name:
+								nwword = pseudo
+							elif word == name[2:]:
+								nwword = pseudo[2:]
+						localLine = localLine + " " + nwword
+					print(localLine)
 					for i in range(len(macroArg)):
-						macroLine = lineO(macroLine.text.replace(f"${i}", macroArg[i]) + lnArg,macroLine.lineID,macroLine.originFileNAME) # nahrazeni parametru makra
+						# nahrazeni ukazovatek jejich lokalnim pseudomymem
+						macroLine = lineO(localLine.replace(f"${i}", macroArg[i]) + lnArg,macroLine.lineID,macroLine.originFileNAME) # nahrazeni parametru makra
 						lnArg = "" #připojí jen na první řádek toto zamezí připojení na ostatní radky
 					if macroLine.text.find("$") != -1: #makro obsahuje argument který není definován
 						print(colored('Makro "','red') + colored(line.text.split()[0],'dark_grey') + colored('" použité na lince ','red') + colored(line.originFileNAME +":"+ str(line.lineID),'dark_grey') + colored(' vyžaduje více parametrů!','red') + colored('" Makro je definovano na lince ','red') +  colored(macroLine.originFileNAME +":"+ str(macroLine.lineID),'dark_grey') + colored('!','red') )
@@ -363,7 +386,7 @@ if "-shMerg" in sys.argv:
 	print(colored("SHOWING PROCESED CODE!!",'blue'))
 	print("DATA:")
 	for var in variables:
-		print(var.name,var.value);
+		print(var.name,var.value)
 	print("CODE:")
 	for cmdL in CMD_LIST:
 		linePOINT = ""
