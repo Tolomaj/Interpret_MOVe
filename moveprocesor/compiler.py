@@ -4,6 +4,7 @@ import sys
 from collections import Counter
 from termcolor import colored
 
+
 FILE_IN = "code.base"
 FILE_OUT = "code.code"
 
@@ -127,10 +128,6 @@ for line in linesArr:
 			linesArr.append(lineO("FILE_END:",lineId,sourceFile)) # ukončení souboru pokud není ukončený aby byli ukončeny sekce data a code
 
 
-for c in linesArr:
-	print(c.text)
-
-print("*-----")
 
 #extrakce promenych
 inDataSection = 0
@@ -162,8 +159,7 @@ for var in variables:
 #extrakce promenych END
 
 if err == 1:
-	print()
-	print(colored('Překlad zastaven kvuli nesprávně definovým makrum :) !','yellow'))
+	print('\n\33[33m' + 'Překlad zastaven kvuli nesprávně definovým makrum :) !'+'\33[0m')
 	exit(1)
 
 # uložení maker 
@@ -212,37 +208,62 @@ if err == 1:
 	print(colored('Překlad zastaven kvuli chybám extrakce maker a proměných :) !','yellow'))
 	exit(1)
 
+def replaceMacro(linesArr):
+	err = 0
+	replacedLines = []
+	for line in linesArr:
+		isMacroLine = 0
+		for macroDTA in MACRO_LIST:
+			if line.text.startswith(macroDTA.name): # když na řádku je makro
+				macroArg = line.text[len(macroDTA.name):].split() # vzaní arumentů
+				isMacroLine = 1
+				lnArg = ""
+				for lpoin in macroArg: # uloží ukazovátka řádku
+					if lpoin.startswith('<-') or lpoin.startswith('{-') or lpoin.startswith('}-'):
+						#kontrola že jsou poslední a zajimy není už parametr dodělat
+						macroArg.remove(lpoin)
+						lnArg = lnArg + lpoin
+						if lnArg[0] != " ":
+							lnArg = " " + lnArg
+
+				for macroLine in macroDTA.content:
+
+					for i in range(len(macroArg)):
+						macroLine = lineO(macroLine.text.replace(f"${i}", macroArg[i]) + lnArg,macroLine.lineID,macroLine.originFileNAME) # nahrazeni parametru makra
+						lnArg = "" #připojí jen na první řádek toto zamezí připojení na ostatní radky
+					if macroLine.text.find("$") != -1: #makro obsahuje argument který není definován
+						print(colored('Makro "','red') + colored(line.text.split()[0],'dark_grey') + colored('" použité na lince ','red') + colored(line.originFileNAME +":"+ str(line.lineID),'dark_grey') + colored(' vyžaduje více parametrů!','red') + colored('" Makro je definovano na lince ','red') +  colored(macroLine.originFileNAME +":"+ str(macroLine.lineID),'dark_grey') + colored('!','red') )
+						err = 1 
+					replacedLines.append(macroLine)
+		if isMacroLine == 0:
+			replacedLines.append(line)
+	if err == 1:
+		print('\n' + colored('Překlad zastaven kvuli chybnému zapsání makra!','yellow'))
+		exit(1)
+		
+	return replacedLines
+
+
+#simplifikace maker
+for macroInd in range(len(MACRO_LIST)): #ASI FUNGUJE IDK
+	MACRO_LIST[macroInd].content = replaceMacro(MACRO_LIST[macroInd].content);#ASI FUNGUJE IDK
+
+for macroInd in range(len(MACRO_LIST)):
+	print("mnm:",MACRO_LIST[macroInd].name)
+	for line in MACRO_LIST[macroInd].content :
+		print("  mcont:",line.text) # check for macro line 
+				#nahrazeni macra
+
+
+
+
+
+
 
 # nahrazení maker a uložení do souboru
 
-for line in linesArr:
-	isMacroLine = 0
-	for macroDTA in MACRO_LIST:
-		if line.text.startswith(macroDTA.name): # když na řádku je makro
-			macroArg = line.text[len(macroDTA.name):].split() # vzaní arumentů
-			isMacroLine = 1
-			lnArg = ""
-			for lpoin in line.text.split():
-				if lpoin.startswith('<-') or lpoin.startswith('{-') or lpoin.startswith('}-'):
-					lnArg = lnArg + lpoin
-					if lnArg[0] != " ":
-						lnArg = " " + lnArg
+linesArr = replaceMacro(linesArr) # dodělat lokální skoky makra
 
-			for macroLine in macroDTA.content:
-
-				for i in range(len(macroArg)):
-					macroLine = lineO(macroLine.text.replace(f"${i}", macroArg[i]) + lnArg,macroLine.lineID,macroLine.originFileNAME) # nahrazeni parametru makra
-
-					lnArg = ""
-				if macroLine.text.find("$") != -1:
-					print(colored('Makro "','red') + colored(line.text.split()[0],'dark_grey') + colored('" použité na lince ','red') + colored(line.originFileNAME +":"+ str(line.lineID),'dark_grey') + colored(' vyžaduje více parametrů!','red') + colored('" Makro je definovano na lince ','red') +  colored(macroLine.originFileNAME +":"+ str(macroLine.lineID),'dark_grey') + colored('!','red') )
-					err = 1 
-				tmpLines.append(macroLine);
-	if isMacroLine == 0:
-		tmpLines.append(line);
-
-linesArr = tmpLines
-tmpLines = []
 # nahrazení maker a uložení do souboru END
 
 
@@ -349,7 +370,7 @@ if "-shMerg" in sys.argv:
 		sourcePOINT = ""
 		destPOINT = ""
 		if cmdL.sourcePOINT:
-		   sourcePOINT = "{-" + cmdL.sourcePOINT
+			sourcePOINT = "{-" + cmdL.sourcePOINT
 		if cmdL.destPOINT:
 			destPOINT = "}-" + cmdL.destPOINT
 		if cmdL.linePOINT:
