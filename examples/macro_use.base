@@ -1,0 +1,23 @@
+#macro example
+
+# výsledně bude "INCREMENT RG" nahrazeno za obsah macra
+# tudíž za:
+#   RG ADD_A    
+#   VAL_ONE ADD_B
+#   ADD_OUT RG
+
+MACRO INCREMENT: #definujeme macro INCREMENT
+   $0 ADD_A      # $0 je nahrazeni prvním parametrem předaným do increment
+   VAL_ONE ADD_B
+   ADD_OUT $0
+MACRO_END
+
+
+DATA:
+   RG 0
+CODE:
+   INCREMENT RG
+   RG MONITOR
+   CODE PROG_POS #loop whole program
+
+
