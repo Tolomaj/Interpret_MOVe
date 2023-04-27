@@ -129,8 +129,6 @@ for line in linesArr:
 		if not linesArr[-1].text.startswith("FILE_END:"):
 			linesArr.append(lineO("FILE_END:",lineId,sourceFile)) # ukončení souboru pokud není ukončený aby byli ukončeny sekce data a code
 
-
-
 #extrakce promenych
 inDataSection = 0
 for line in linesArr:
@@ -249,10 +247,9 @@ def replaceMacro(linesArr):
 							elif word == name[2:]:
 								nwword = pseudo[2:]
 						localLine = localLine + " " + nwword
-					print(localLine)
 					for i in range(len(macroArg)):
 						# nahrazeni ukazovatek jejich lokalnim pseudomymem
-						macroLine = lineO(localLine.replace(f"${i}", macroArg[i]) + lnArg,macroLine.lineID,macroLine.originFileNAME) # nahrazeni parametru makra
+						macroLine = lineO(" ".join((localLine.replace(f"${i}", macroArg[i]) + lnArg).split()),macroLine.lineID,macroLine.originFileNAME) # nahrazeni parametru makra
 						lnArg = "" #připojí jen na první řádek toto zamezí připojení na ostatní radky
 					if macroLine.text.find("$") != -1: #makro obsahuje argument který není definován
 						print(colored('Makro "','red') + colored(line.text.split()[0],'dark_grey') + colored('" použité na lince ','red') + colored(line.originFileNAME +":"+ str(line.lineID),'dark_grey') + colored(' vyžaduje více parametrů!','red') + colored('" Makro je definovano na lince ','red') +  colored(macroLine.originFileNAME +":"+ str(macroLine.lineID),'dark_grey') + colored('!','red') )
@@ -268,8 +265,9 @@ def replaceMacro(linesArr):
 
 
 #simplifikace maker
-for macroInd in range(len(MACRO_LIST)): #ASI FUNGUJE IDK
-	MACRO_LIST[macroInd].content = replaceMacro(MACRO_LIST[macroInd].content);#ASI FUNGUJE IDK
+for i in range(50): # opravit momentálně zvládne jen 50 zanořených maker
+	for macroInd in range(len(MACRO_LIST)): #ASI FUNGUJE IDK
+		MACRO_LIST[macroInd].content = replaceMacro(MACRO_LIST[macroInd].content);#ASI FUNGUJE IDK
 
 for macroInd in range(len(MACRO_LIST)):
 	print("mnm:",MACRO_LIST[macroInd].name)
@@ -284,8 +282,14 @@ for macroInd in range(len(MACRO_LIST)):
 
 
 # nahrazení maker a uložení do souboru
+print("kostra")
+for line in linesArr :
+	print(line.text)
 
 linesArr = replaceMacro(linesArr) # dodělat lokální skoky makra
+
+for line in linesArr :
+	print(line.text)
 
 # nahrazení maker a uložení do souboru END
 
