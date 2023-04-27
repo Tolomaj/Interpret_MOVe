@@ -214,7 +214,7 @@ def replaceMacro(linesArr):
 	for line in linesArr:
 		isMacroLine = 0
 		for macroDTA in MACRO_LIST:
-			if line.text.startswith(macroDTA.name): # když na řádku je makro
+			if line.text.startswith(macroDTA.name+" "): # když na řádku je makro
 				macroArg = line.text[len(macroDTA.name):].split() # vzaní arumentů
 				isMacroLine = 1
 				lnArg = ""
