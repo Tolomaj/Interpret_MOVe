@@ -136,6 +136,8 @@ for line in linesArr:
 		inDataSection = 1
 	elif line.text.startswith("CODE:"):
 		inDataSection = 0
+	elif line.text.startswith("MACRO"):
+		inDataSection = 0
 	elif line.text.startswith("FILE_END:"):
 		inDataSection = 0
 	elif inDataSection == 1:
