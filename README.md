@@ -252,3 +252,5 @@ FILE_END:		#Toto je dobrovolé, kompilátor si toto sám umí doplnit
 	...
 [PROGRAM_INSTRUCTIONS]
 ```
+# Konečné slovo:
+> :information_source: Projekt i když není scela odladěný je opuštený. Vše popsané v tomto souboru je funkční ale neplánuji v blízké budoucnosti přidávat nové funkce. 
