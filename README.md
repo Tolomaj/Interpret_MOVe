@@ -185,8 +185,11 @@ Paměťový prostor vypisujeme od 100 protože před stovkou jsou sčítací reg
 Soubor compiler.py je kompilátor který z move kódu udělá číselný kód čitelný interpretem.
 Interpret automaticky při příkazu load zkompiluje soubor code.base na code.code který pak načítá.
 To ale uživatel může udělat sám (třeba při poruše souboru code.code) si může zkompilovat a nahradit code.code sám
-Kompilátor umžnuje používat makra a spojovat víe souboru (do jisté míry)
-##help kompilátoru:
+Kompilátor umžnuje používat makra a spojovat víe souboru
+> :warning: makra hlavně ve spojených souborech občas dělají binec.
+
+#help kompilátoru:
+
 ![image](https://user-images.githubusercontent.com/59420562/234114975-bb290131-7052-49b4-8cab-f4974a84c9cf.png)
 ```python
 INCLUDE library.base  # vložení souboru. jakoby spojí soubory. Zatím lze pouze psát v hlavním souboru
