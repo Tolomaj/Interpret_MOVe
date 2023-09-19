@@ -186,6 +186,7 @@ Soubor compiler.py je kompilátor který z move kódu udělá číselný kód č
 Interpret automaticky při příkazu load zkompiluje soubor code.base na code.code který pak načítá.
 To ale uživatel může udělat sám (třeba při poruše souboru code.code) si může zkompilovat a nahradit code.code sám
 Kompilátor umžnuje používat makra a spojovat víe souboru
+
 Příklad makra je v examples/macro_use.base
 > :warning: makra hlavně ve spojených souborech občas dělají binec.
 
