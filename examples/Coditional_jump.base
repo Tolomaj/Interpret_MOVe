@@ -1,0 +1,31 @@
+# V tomto pøíkladu je ukázaný podmínìný skok.
+# K promìné TIM pøièítáme 1 a ukládáme na monitor. 
+# Pokud však je CAN_JUMP 1 tak skoèí a pøeskoèí pøiètení k TIM
+#
+# Pøi skoku využíváme registrù SWITCH který na základì hodnoty SWITCH_S do SITCH_OUT zapíše buï SWITCH_B nebo SWITCH_A
+
+DATA:
+	TIM 0	    # promìná která poèítá 
+
+	CAN_JUMP 2	# podmínka skoku (1 je že skoèí, jinak neskáèe)
+CODE:
+
+	VAL_NULL  VAL_NULL <-LOOP #zbyteèný øádek, nic nedìlá protože zapíše z 0 do 0 tudíš se nic nezmìní (ukazujeme na nìj LOOPEM)
+
+	CAN_JUMP SWITCH_S #podmínka skoku když CAN_JUMP je 0 skoèí na PROG_NEXT (tudíš nezkoèí, protože PROG_NEXT obsahuje adresu druhé další vykonávané operace)
+
+	SKIP SWITCH_A       # nastavení do switche kam chceme skoèit
+	PROG_NEXT SWITCH_B  # nastvaneí neskoèení (PROGR_NEXT) 
+	SWITCH_OUT PROG_POS # skoèení na vysledek Switche
+
+	TIM ADD_B     # akce na preskoèení
+	VAL_ONE ADD_A # pøiète k promìné TIM jednièku 
+	ADD_OUT TIM   # a zapíše spátky do TIM 
+
+	VAL_NULL VAL_NULL <-SKIP
+
+	TIM MONITOR # zapsaní tim na monitor
+
+	CODE PROG_POS # CODE je ukazovátko na zaèátek programu (prví CODE:)
+
+FILE_END:		#Toto je dobrovolé, kompilátor si toto sám umí doplnit
